@@ -51,6 +51,8 @@ def _to_int(value, default=0):
 
 
 def _build_compatible_worker_init_fn(worker_init_fn, num_workers: int, rank: int):
+    if getattr(worker_init_fn, '_swift_compatible_worker_init', False):
+        return worker_init_fn
     try:
         parameters = list(inspect.signature(worker_init_fn).parameters.values())
     except (TypeError, ValueError):
@@ -74,6 +76,7 @@ def _build_compatible_worker_init_fn(worker_init_fn, num_workers: int, rank: int
                 raise TypeError(f'Unsupported worker_init_fn signature: {inspect.signature(worker_init_fn)}')
         return worker_init_fn(*call_args)
 
+    _wrapped._swift_compatible_worker_init = True
     return _wrapped
 
 
@@ -83,6 +86,7 @@ def _patch_torch_dataloader_worker_init():
         return
 
     origin_init = dataloader_cls.__init__
+    origin_setattr = dataloader_cls.__setattr__
     origin_signature = inspect.signature(origin_init)
 
     def _patched_init(self, *args, **kwargs):
@@ -94,8 +98,30 @@ def _patch_torch_dataloader_worker_init():
             bound.arguments['worker_init_fn'] = _build_compatible_worker_init_fn(worker_init_fn, num_workers, rank)
         return origin_init(*bound.args, **bound.kwargs)
 
+    def _patched_setattr(self, name, value):
+        if name == 'worker_init_fn' and value is not None:
+            num_workers = _to_int(getattr(self, 'num_workers', 0), 0)
+            rank = _to_int(os.environ.get('RANK', os.environ.get('LOCAL_RANK')), 0)
+            value = _build_compatible_worker_init_fn(value, num_workers, rank)
+        return origin_setattr(self, name, value)
+
     dataloader_cls.__init__ = _patched_init
+    dataloader_cls.__setattr__ = _patched_setattr
     dataloader_cls._swift_worker_init_patched = True
+
+
+def _patch_transformers_seed_worker():
+    rank = _to_int(os.environ.get('RANK', os.environ.get('LOCAL_RANK')), 0)
+
+    trainer_utils_module = getattr(transformers, 'trainer_utils', None)
+    if trainer_utils_module is not None and hasattr(trainer_utils_module, 'seed_worker'):
+        seed_worker_fn = getattr(trainer_utils_module, 'seed_worker')
+        setattr(trainer_utils_module, 'seed_worker', _build_compatible_worker_init_fn(seed_worker_fn, 0, rank))
+
+    trainer_module = getattr(transformers, 'trainer', None)
+    if trainer_module is not None and hasattr(trainer_module, 'seed_worker'):
+        seed_worker_fn = getattr(trainer_module, 'seed_worker')
+        setattr(trainer_module, 'seed_worker', _build_compatible_worker_init_fn(seed_worker_fn, 0, rank))
 
 
 class SwiftMixin:
@@ -115,6 +141,7 @@ class SwiftMixin:
                  preprocess_logits_for_metrics: Optional[Callable[[torch.Tensor, torch.Tensor], torch.Tensor]] = None,
                  **kwargs) -> None:
         _patch_torch_dataloader_worker_init()
+        _patch_transformers_seed_worker()
         if args.check_model and hasattr(model, 'model_dir'):
             from swift.utils.logger import ms_logger_ignore_error
             with ms_logger_ignore_error():

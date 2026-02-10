@@ -1,4 +1,5 @@
 # Copyright (c) Alibaba, Inc. and its affiliates.
+import inspect
 import os
 import sys
 import types
@@ -11,12 +12,40 @@ import transformers
 from packaging import version
 from peft import PeftModel
 from torch.utils.data import DataLoader
-from transformers import PreTrainedModel, trainer
+from transformers import PreTrainedModel, trainer, trainer_utils
 from transformers.modeling_utils import unwrap_model
 
 from swift.utils import get_logger, torchacc_trim_graph, use_torchacc
 
 logger = get_logger()
+
+
+def _build_seed_worker(args):
+    # Compatible with different transformers seed_worker signatures across versions.
+    seed_worker_fn = getattr(trainer, 'seed_worker', None)
+    if seed_worker_fn is None:
+        seed_worker_fn = getattr(trainer_utils, 'seed_worker', None)
+    if seed_worker_fn is None:
+        return None
+
+    parameters = list(inspect.signature(seed_worker_fn).parameters.values())
+    if len(parameters) <= 1:
+        return seed_worker_fn
+
+    rank = getattr(args, 'process_index', 0)
+
+    def _seed_worker(worker_id):
+        call_args = [worker_id]
+        for parameter in parameters[1:]:
+            if parameter.name == 'num_workers':
+                call_args.append(args.dataloader_num_workers)
+            elif parameter.name in {'rank', 'process_index'}:
+                call_args.append(rank)
+            elif parameter.default is inspect.Parameter.empty:
+                raise TypeError(f'Unsupported seed_worker signature: {inspect.signature(seed_worker_fn)}')
+        return seed_worker_fn(*call_args)
+
+    return _seed_worker
 
 
 # DataLoader
@@ -110,7 +139,7 @@ def ta_train_dataloader(train_dataset, data_collator, sampler, args, batch_size)
 
         if not isinstance(train_dataset, torch.utils.data.IterableDataset):
             dataloader_params['batch_sampler'] = batch_sampler
-            dataloader_params['worker_init_fn'] = trainer.seed_worker
+            dataloader_params['worker_init_fn'] = _build_seed_worker(args)
 
         return ta.AsyncLoader(DataLoader(dataset, **dataloader_params), args.device)
 
@@ -130,7 +159,7 @@ def ta_train_dataloader(train_dataset, data_collator, sampler, args, batch_size)
     if not isinstance(train_dataset, torch.utils.data.IterableDataset):
         dataloader_params['sampler'] = sampler
         dataloader_params['drop_last'] = args.dataloader_drop_last
-        dataloader_params['worker_init_fn'] = trainer.seed_worker
+        dataloader_params['worker_init_fn'] = _build_seed_worker(args)
 
     return ta.AsyncLoader(DataLoader(train_dataset, **dataloader_params), args.device)
 

@@ -6,7 +6,6 @@ import torch
 import torch.distributed as dist
 from datasets import Dataset
 from torch.utils.data import DataLoader
-from transformers.trainer_utils import seed_worker
 
 
 def assert_xtuner_runtime_condition():
@@ -106,6 +105,6 @@ def get_xtuner_train_dataloader(trainer):
         from xtuner.parallel import SequenceParallelSampler
         dataloader_params['sampler'] = SequenceParallelSampler(train_dataset, seed=1024)
         dataloader_params['drop_last'] = trainer.args.dataloader_drop_last
-        dataloader_params['worker_init_fn'] = seed_worker
+        dataloader_params['worker_init_fn'] = trainer.seed_worker
 
     return DataLoader(train_dataset, **dataloader_params)

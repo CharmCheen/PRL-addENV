@@ -332,6 +332,29 @@ class SwiftMixin:
         else:
             super().create_optimizer_and_scheduler(num_training_steps=num_training_steps)
 
+    def seed_worker(self, worker_id: int):
+        # Compatible with different transformers seed_worker signatures across versions.
+        seed_worker_fn = getattr(transformers.trainer_utils, 'seed_worker', None)
+        if seed_worker_fn is None:
+            seed_worker_fn = getattr(transformers.trainer, 'seed_worker', None)
+        if seed_worker_fn is None:
+            return None
+
+        parameters = list(inspect.signature(seed_worker_fn).parameters.values())
+        if len(parameters) <= 1:
+            return seed_worker_fn(worker_id)
+
+        call_args = [worker_id]
+        rank = getattr(self.args, 'process_index', 0)
+        for parameter in parameters[1:]:
+            if parameter.name == 'num_workers':
+                call_args.append(self.args.dataloader_num_workers)
+            elif parameter.name in {'rank', 'process_index'}:
+                call_args.append(rank)
+            elif parameter.default is inspect.Parameter.empty:
+                raise TypeError(f'Unsupported seed_worker signature: {inspect.signature(seed_worker_fn)}')
+        return seed_worker_fn(*call_args)
+
     def _get_train_sampler(self) -> Optional[torch.utils.data.Sampler]:
         if self.args.train_sampler_random:
             return super()._get_train_sampler()

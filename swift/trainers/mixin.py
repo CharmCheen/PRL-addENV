@@ -43,6 +43,61 @@ except (ImportError, RuntimeError):
 logger = get_logger()
 
 
+def _to_int(value, default=0):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _build_compatible_worker_init_fn(worker_init_fn, num_workers: int, rank: int):
+    try:
+        parameters = list(inspect.signature(worker_init_fn).parameters.values())
+    except (TypeError, ValueError):
+        return worker_init_fn
+
+    if len(parameters) <= 1:
+        return worker_init_fn
+
+    # If the callable uses *args/**kwargs, worker_id-only invocation is already valid.
+    if any(p.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD) for p in parameters):
+        return worker_init_fn
+
+    def _wrapped(worker_id):
+        call_args = [worker_id]
+        for parameter in parameters[1:]:
+            if parameter.name == 'num_workers':
+                call_args.append(num_workers)
+            elif parameter.name in {'rank', 'process_index'}:
+                call_args.append(rank)
+            elif parameter.default is inspect.Parameter.empty:
+                raise TypeError(f'Unsupported worker_init_fn signature: {inspect.signature(worker_init_fn)}')
+        return worker_init_fn(*call_args)
+
+    return _wrapped
+
+
+def _patch_torch_dataloader_worker_init():
+    dataloader_cls = torch.utils.data.DataLoader
+    if getattr(dataloader_cls, '_swift_worker_init_patched', False):
+        return
+
+    origin_init = dataloader_cls.__init__
+    origin_signature = inspect.signature(origin_init)
+
+    def _patched_init(self, *args, **kwargs):
+        bound = origin_signature.bind_partial(self, *args, **kwargs)
+        worker_init_fn = bound.arguments.get('worker_init_fn')
+        if worker_init_fn is not None:
+            num_workers = _to_int(bound.arguments.get('num_workers'), 0)
+            rank = _to_int(os.environ.get('RANK', os.environ.get('LOCAL_RANK')), 0)
+            bound.arguments['worker_init_fn'] = _build_compatible_worker_init_fn(worker_init_fn, num_workers, rank)
+        return origin_init(*bound.args, **bound.kwargs)
+
+    dataloader_cls.__init__ = _patched_init
+    dataloader_cls._swift_worker_init_patched = True
+
+
 class SwiftMixin:
 
     def __init__(self,
@@ -59,6 +114,7 @@ class SwiftMixin:
                  optimizers: Tuple[torch.optim.Optimizer, torch.optim.lr_scheduler.LambdaLR] = (None, None),
                  preprocess_logits_for_metrics: Optional[Callable[[torch.Tensor, torch.Tensor], torch.Tensor]] = None,
                  **kwargs) -> None:
+        _patch_torch_dataloader_worker_init()
         if args.check_model and hasattr(model, 'model_dir'):
             from swift.utils.logger import ms_logger_ignore_error
             with ms_logger_ignore_error():
@@ -363,7 +419,15 @@ class SwiftMixin:
 
     def get_train_dataloader(self):
         if self.args.sequence_parallel_size == 1:
-            return super().get_train_dataloader()
+            train_dataloader = super().get_train_dataloader()
+            # Some transformers versions set worker_init_fn to a module-level seed_worker
+            # whose signature may be incompatible with torch DataLoader(worker_id-only call).
+            if hasattr(train_dataloader, 'worker_init_fn'):
+                train_dataloader.worker_init_fn = self.seed_worker
+            elif hasattr(train_dataloader, 'base_dataloader') and hasattr(train_dataloader.base_dataloader,
+                                                                          'worker_init_fn'):
+                train_dataloader.base_dataloader.worker_init_fn = self.seed_worker
+            return train_dataloader
         else:
             from swift.trainers.xtuner import get_xtuner_train_dataloader
             return get_xtuner_train_dataloader(self)

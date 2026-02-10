@@ -152,6 +152,9 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
         kwargs['data_collator'] = lambda features: features
         self._metrics = {'train': defaultdict(list), 'eval': defaultdict(list)}
 
+        # Initialize shuffle_dataset for TRL 0.17.0 compatibility
+        self.shuffle_dataset = getattr(args, 'shuffle_dataset', True)
+
         use_vllm = args.use_vllm
         use_lmdeploy = args.use_lmdeploy
 

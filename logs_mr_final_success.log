@@ -1,0 +1,1358 @@
+/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+[INFO:swift] Successfully registered `/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/dataset/data/dataset_info.json`.
+[INFO:swift] Setting args.remove_unused_columns: False
+[INFO:swift] rank: 0, local_rank: 0, world_size: 1, local_world_size: 1
+[INFO:swift.hub.hub] Downloading the model from ModelScope Hub, model_id: Qwen/Qwen2.5-7B-Instruct
+[INFO:modelscope] Target directory already exists, skipping creation.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+[INFO:swift] Because len(args.val_dataset) > 0, setting split_dataset_ratio: 0.0
+[INFO:swift] Setting args.lazy_tokenize: False
+[INFO:swift] output_dir: output/v17-20260210-075702
+[INFO:swift] Global seed set to 5
+[INFO:swift] args: RLHFArguments(
+_n_gpu=-1,
+acc_steps=1,
+acc_strategy=token,
+accelerator_config={'dispatch_batches': False},
+adafactor=False,
+adalora_beta1=0.85,
+adalora_beta2=0.85,
+adalora_deltaT=1,
+adalora_init_r=12,
+adalora_orth_reg_weight=0.5,
+adalora_target_r=8,
+adalora_tfinal=0,
+adalora_tinit=0,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+adapter_act=gelu,
+adapter_length=128,
+adapters=[],
+add_version=True,
+async_generate=False,
+attn_impl=None,
+auto_find_batch_size=False,
+average_tokens_across_devices=True,
+batch_eval_metrics=False,
+beta=0.04,
+bf16=True,
+bf16_full_eval=False,
+bnb_4bit_compute_dtype=torch.bfloat16,
+bnb_4bit_quant_storage=None,
+bnb_4bit_quant_type=nf4,
+bnb_4bit_use_double_quant=True,
+boft_block_num=0,
+boft_block_size=4,
+boft_dropout=0.0,
+boft_n_butterfly_factor=1,
+check_model=True,
+ckpt_dir=None,
+cliprange=0.2,
+cliprange_value=0.2,
+columns={},
+cosine_max_len=None,
+cosine_max_len_value_correct=0.5,
+cosine_max_len_value_wrong=-0.5,
+cosine_min_len_value_correct=1.0,
+cosine_min_len_value_wrong=0.0,
+cpo_alpha=1.0,
+create_checkpoint_symlink=False,
+custom_dataset_info=[],
+custom_register_path=[],
+data_seed=5,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+dataset=['datasets/original/mr_train.jsonl'],
+dataset_num_proc=4,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=None,
+deepspeed=None,
+desirable_weight=1.0,
+device_map=None,
+disable_tqdm=None,
+do_eval=False,
+do_predict=False,
+do_train=False,
+download_mode=reuse_dataset_if_exists,
+ds3_gather_for_generation=True,
+enable_cache=False,
+epsilon=0.2,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_do_concat_batches=True,
+eval_on_start=False,
+eval_steps=100.0,
+eval_strategy=steps,
+eval_use_gather_object=False,
+external_plugins=[],
+fourier_n_frequency=2000,
+fourier_scaling=300.0,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+freeze_aligner=True,
+freeze_llm=False,
+freeze_parameters=[],
+freeze_parameters_ratio=0.0,
+freeze_vit=True,
+fsdp=None,
+fsdp_config=None,
+fsdp_min_num_params=0,
+fsdp_num=1,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+galore_cos_threshold=0.4,
+galore_gamma_proj=2,
+galore_optim_per_parameter=False,
+galore_proj_bits=4,
+galore_proj_group_size=256,
+galore_proj_quant=False,
+galore_proj_type=std,
+galore_quantization=False,
+galore_queue_size=5,
+galore_rank=128,
+galore_scale=1.0,
+galore_target_modules=None,
+galore_update_proj_gap=50,
+galore_with_embedding=False,
+gamma=1.0,
+gc_collect_after_offload=False,
+generation_config=None,
+generation_max_length=None,
+generation_num_beams=None,
+gradient_accumulation_steps=1,
+gradient_checkpointing=True,
+gradient_checkpointing_kwargs={'use_reentrant': False},
+greater_is_better=True,
+group_by_length=False,
+half_precision_backend=auto,
+hqq_axis=None,
+hub_always_push=False,
+hub_model_id=None,
+hub_private_repo=None,
+hub_revision=None,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_args_error=False,
+ignore_data_skip=False,
+include_for_metrics=[],
+include_inputs_for_metrics=False,
+include_num_input_tokens_seen=False,
+include_tokens_per_second=False,
+init_weights=True,
+jit_mode_eval=False,
+kl_coef=0.05,
+label_names=None,
+label_smoothing=0,
+label_smoothing_factor=0.0,
+lam=0.95,
+lazy_tokenize=False,
+learning_rate=1e-06,
+length_column_name=length,
+liger_kernel_config=None,
+lisa_activated_layers=0,
+lisa_step_interval=20,
+llamapro_num_groups=None,
+llamapro_num_new_blocks=4,
+lmdeploy_cache_max_entry_count=0.8,
+lmdeploy_device=auto,
+lmdeploy_session_len=None,
+load_args=False,
+load_best_model_at_end=False,
+load_data_args=False,
+load_dataset_config=None,
+local_rank=0,
+local_repo_path=None,
+local_rollout_forward_batch_size=64,
+log_completions=True,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v17-20260210-075702/runs,
+logging_first_step=True,
+logging_nan_inf_filter=True,
+logging_steps=5,
+logging_strategy=steps,
+logprobs=False,
+lora_alpha=32,
+lora_bias=none,
+lora_dropout=0.05,
+lora_dtype=None,
+lora_ga_batch_size=2,
+lora_ga_direction=ArB2r,
+lora_ga_iters=2,
+lora_ga_max_length=1024,
+lora_ga_scale=stable,
+lora_ga_stable_gamma=16,
+lora_modules=[],
+lora_rank=8,
+lorap_lr_ratio=None,
+loss_scale=last_round,
+loss_type=None,
+lr_scheduler_kwargs=None,
+lr_scheduler_type=cosine,
+max_completion_length=1024,
+max_grad_norm=1.0,
+max_length=2048,
+max_memory={},
+max_new_tokens=64,
+max_pixels=None,
+max_steps=-1,
+metric=None,
+metric_for_best_model=reward,
+metric_warmup_step=0,
+missing_eos_penalty=None,
+model=Qwen/Qwen2.5-7B-Instruct,
+model_author=[None, None],
+model_kwargs={},
+model_layer_cls_name=None,
+model_name=[None, None],
+model_revision=None,
+model_type=qwen2_5,
+modules_to_save=[],
+move_model_batches=None,
+mp_parameters=,
+neftune_noise_alpha=None,
+no_cuda=False,
+norm_bbox=None,
+num_beams=1,
+num_generations=4,
+num_infer_workers=1,
+num_iterations=1,
+num_labels=None,
+num_mini_batches=1,
+num_ppo_epochs=4,
+num_sample_generations=10,
+num_train_epochs=10.0,
+offload_model=False,
+offload_optimizer=False,
+optim=adamw_torch_fused,
+optim_args=None,
+optim_target_modules=None,
+optimizer=None,
+output_dir=/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v17-20260210-075702,
+overwrite_output_dir=False,
+packing=False,
+padding_side=right,
+parallelism_config=None,
+past_index=-1,
+per_device_eval_batch_size=4,
+per_device_train_batch_size=4,
+predict_with_generate=False,
+prediction_loss_only=False,
+project=huggingface,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+quant_bits=None,
+quant_method=None,
+ray_scope=last,
+ref_model=None,
+ref_model_revision=None,
+ref_model_type=None,
+reft_args=None,
+reft_intervention_type=LoreftIntervention,
+reft_layer_key=None,
+reft_layers=None,
+reft_rank=4,
+remove_unused_columns=False,
+repetition_max_penalty=-1.0,
+repetition_n_grams=3,
+repetition_penalty=1.0,
+report_to=['wandb'],
+response_length=512,
+response_prefix=None,
+restore_callback_states_from_checkpoint=False,
+resume_from_checkpoint=None,
+resume_only_model=False,
+reward_adapters=[],
+reward_funcs=['accuracy', 'format'],
+reward_model=None,
+reward_model_revision=None,
+reward_model_type=None,
+reward_weights=None,
+rlhf_type=grpo,
+rope_scaling=None,
+rpo_alpha=1.0,
+run_name=None,
+save_on_each_node=False,
+save_only_model=False,
+save_safetensors=True,
+save_steps=100.0,
+save_strategy=steps,
+save_total_limit=20,
+seed=5,
+sequence_parallel_size=1,
+simpo_gamma=1,
+skip_memory_metrics=True,
+sleep_level=0,
+sortish_sampler=False,
+split_dataset_ratio=0.0,
+stop_words=[],
+stream=False,
+streaming=False,
+strict=False,
+swanlab_exp_name=None,
+swanlab_mode=cloud,
+swanlab_project=None,
+swanlab_token=<SWANLAB_TOKEN>,
+swanlab_workspace=None,
+system=A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant first thinks about the reasoning process in the mind and then provides the user with the answer. The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think><answer> answer here </answer>,
+target_modules=['all-linear'],
+target_regex=None,
+task_type=causal_lm,
+temperature=0.9,
+template=qwen2_5,
+template_backend=swift,
+tensor_parallel_size=1,
+tf32=None,
+tools_prompt=react_en,
+top_k=50,
+top_logprobs=None,
+top_p=0.9,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torch_dtype=torch.bfloat16,
+torch_empty_cache_steps=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+trackio_space_id=trackio,
+train_type=lora,
+trainable_parameters=[],
+truncation_strategy=left,
+tuner_backend=peft,
+undesirable_weight=1.0,
+use_chat_template=True,
+use_cpu=False,
+use_dora=False,
+use_galore=False,
+use_hf=False,
+use_legacy_prediction_loop=False,
+use_liger=False,
+use_liger_kernel=False,
+use_lmdeploy=False,
+use_mps_device=False,
+use_rslora=False,
+use_swift_lora=False,
+use_vllm=True,
+val_dataset=['datasets/original/mr_val.jsonl'],
+vera_d_initial=0.1,
+vera_dropout=0.0,
+vera_projection_prng_key=0,
+vera_rank=256,
+vf_coef=0.1,
+vllm_device=['auto'],
+vllm_enable_prefix_caching=True,
+vllm_enforce_eager=False,
+vllm_gpu_memory_utilization=0.5,
+vllm_limit_mm_per_prompt=None,
+vllm_max_model_len=None,
+vllm_max_num_seqs=256,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.1,
+whiten_rewards=False,
+zero_hpz_partition_size=None,
+)
+[INFO:swift.hub.hub] Downloading the model from ModelScope Hub, model_id: Qwen/Qwen2.5-7B-Instruct
+[INFO:modelscope] Target directory already exists, skipping creation.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+`torch_dtype` is deprecated! Use `dtype` instead!
+[INFO:swift] model_kwargs: {'device_map': 'cuda:0'}
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.07s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:08<00:08,  4.11s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [00:12<00:04,  4.05s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:15<00:00,  3.92s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:15<00:00,  3.98s/it]
+[INFO:swift] model.hf_device_map: {'': device(type='cuda', index=0)}
+[INFO:swift] model_info: ModelInfo(model_type='qwen2_5', model_dir='/qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct', torch_dtype=torch.bfloat16, max_model_len=32768, quant_method=None, quant_bits=None, rope_scaling=None, config=Qwen2Config {
+  "architectures": [
+    "Qwen2ForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "dtype": "bfloat16",
+  "eos_token_id": 151645,
+  "hidden_act": "silu",
+  "hidden_size": 3584,
+  "initializer_range": 0.02,
+  "intermediate_size": 18944,
+  "layer_types": [
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention"
+  ],
+  "max_position_embeddings": 32768,
+  "max_window_layers": 28,
+  "model_type": "qwen2",
+  "num_attention_heads": 28,
+  "num_hidden_layers": 28,
+  "num_key_value_heads": 4,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000.0,
+  "sliding_window": null,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.57.6",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 152064
+}
+, task_type='causal_lm', num_labels=None)
+[INFO:swift] model.generation_config: GenerationConfig {
+  "bos_token_id": 151643,
+  "do_sample": true,
+  "eos_token_id": [
+    151645,
+    151643
+  ],
+  "max_new_tokens": 64,
+  "pad_token_id": 151643,
+  "temperature": 0.9,
+  "top_p": 0.9
+}
+
+[INFO:swift] default_system: A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant first thinks about the reasoning process in the mind and then provides the user with the answer. The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think><answer> answer here </answer>
+[INFO:swift] The RLHFArguments will be saved in: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v17-20260210-075702/args.json
+[INFO:swift] Start time of running main: 2026-02-10 07:57:20.775103
+[INFO:swift] create tmp_dir: /qiuyeqing/.cache/modelscope/tmp/hf_datasets-rjll5ruo
+
+Map (num_proc=4):   0%|          | 0/8462 [00:00<?, ? examples/s]
+Map (num_proc=4):  25%|██▍       | 2115/8462 [00:00<00:00, 13552.75 examples/s]
+Map (num_proc=4): 100%|██████████| 8462/8462 [00:00<00:00, 30802.92 examples/s]
+
+Map (num_proc=4):   0%|          | 0/8462 [00:00<?, ? examples/s]
+Map (num_proc=4):  24%|██▎       | 2000/8462 [00:00<00:00, 10222.37 examples/s]
+Map (num_proc=4): 100%|██████████| 8462/8462 [00:00<00:00, 21181.24 examples/s]
+
+Map (num_proc=4):   0%|          | 0/200 [00:00<?, ? examples/s]
+Map (num_proc=4):  25%|██▌       | 50/200 [00:00<00:00, 331.98 examples/s]
+Map (num_proc=4): 100%|██████████| 200/200 [00:00<00:00, 629.41 examples/s]
+
+Map (num_proc=4):   0%|          | 0/200 [00:00<?, ? examples/s]
+Map (num_proc=4):  25%|██▌       | 50/200 [00:00<00:00, 319.35 examples/s]
+Map (num_proc=4): 100%|██████████| 200/200 [00:00<00:00, 604.60 examples/s]
+[INFO:swift] train_dataset: Dataset({
+    features: ['messages', 'solution'],
+    num_rows: 8462
+})
+[INFO:swift] val_dataset: Dataset({
+    features: ['messages', 'solution'],
+    num_rows: 200
+})
+[INFO:swift] The split dataset from the training set will be saved at: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v17-20260210-075702/val_dataset.jsonl.
+[INFO:swift] lora_config: LoraConfig(task_type='CAUSAL_LM', peft_type=<PeftType.LORA: 'LORA'>, auto_mapping=None, base_model_name_or_path='/qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct', revision=None, inference_mode=False, r=8, target_modules={'o_proj', 'k_proj', 'up_proj', 'q_proj', 'v_proj', 'down_proj', 'gate_proj'}, exclude_modules=None, lora_alpha=32, lora_dropout=0.05, fan_in_fan_out=False, bias='none', use_rslora=False, modules_to_save=[], init_lora_weights=True, layers_to_transform=None, layers_pattern=None, rank_pattern={}, alpha_pattern={}, megatron_config=None, megatron_core='megatron.core', loftq_config={}, eva_config=None, use_dora=False, layer_replication=None, runtime_config=LoraRuntimeConfig(ephemeral_gpu_offload=False), lora_bias=False, lora_dtype=None, lorap_lr_ratio=None, lorap_emb_lr=1e-06)
+[INFO:swift] model: PeftModelForCausalLM(
+  (base_model): LoraModel(
+    (model): Qwen2ForCausalLM(
+      (model): Qwen2Model(
+        (embed_tokens): Embedding(152064, 3584)
+        (layers): ModuleList(
+          (0-27): 28 x Qwen2DecoderLayer(
+            (self_attn): Qwen2Attention(
+              (q_proj): lora.Linear(
+                (base_layer): Linear(in_features=3584, out_features=3584, bias=True)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=3584, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=3584, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (k_proj): lora.Linear(
+                (base_layer): Linear(in_features=3584, out_features=512, bias=True)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=3584, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=512, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (v_proj): lora.Linear(
+                (base_layer): Linear(in_features=3584, out_features=512, bias=True)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=3584, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=512, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (o_proj): lora.Linear(
+                (base_layer): Linear(in_features=3584, out_features=3584, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=3584, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=3584, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+            )
+            (mlp): Qwen2MLP(
+              (gate_proj): lora.Linear(
+                (base_layer): Linear(in_features=3584, out_features=18944, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=3584, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=18944, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (up_proj): lora.Linear(
+                (base_layer): Linear(in_features=3584, out_features=18944, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=3584, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=18944, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (down_proj): lora.Linear(
+                (base_layer): Linear(in_features=18944, out_features=3584, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Dropout(p=0.05, inplace=False)
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=18944, out_features=8, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=8, out_features=3584, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (act_fn): SiLUActivation()
+            )
+            (input_layernorm): Qwen2RMSNorm((3584,), eps=1e-06)
+            (post_attention_layernorm): Qwen2RMSNorm((3584,), eps=1e-06)
+          )
+        )
+        (norm): Qwen2RMSNorm((3584,), eps=1e-06)
+        (rotary_emb): Qwen2RotaryEmbedding()
+      )
+      (lm_head): Linear(in_features=3584, out_features=152064, bias=False)
+    )
+  )
+)
+[INFO:swift] model_parameter_info: PeftModelForCausalLM: 7635.8016M Params (20.1851M Trainable [0.2643%]), 0.0001M Buffers.
+/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/trainers/mixin.py:80: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `GRPOTrainer.__init__`. Use `processing_class` instead.
+  super().__init__(
+The model is already on multiple devices. Skipping the move to device specified in `args`.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+[INFO:swift.hub.hub] Downloading the model from ModelScope Hub, model_id: Qwen/Qwen2.5-7B-Instruct
+[INFO:modelscope] Target directory already exists, skipping creation.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+[INFO:swift] Setting torch_dtype: torch.bfloat16
+[INFO:swift] model_kwargs: {'device_map': 'auto'}
+
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.01s/it]
+Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.93s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [00:11<00:03,  3.93s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:15<00:00,  3.78s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:15<00:00,  3.84s/it]
+[WARNING:swift] The requested device cuda:0 is also used for training. This may lead to unexpected behavior. It is recommended to use a dedicated device for vLLM.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+[rank0]:[W210 07:58:14.828948170 ProcessGroupNCCL.cpp:981] Warning: TORCH_NCCL_AVOID_RECORD_STREAMS is the default now, this environment variable is thus deprecated. (function operator())
+
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:04<00:12,  4.24s/it]
+
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:08<00:08,  4.07s/it]
+
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:11<00:03,  3.84s/it]
+
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:15<00:00,  3.88s/it]
+
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:15<00:00,  3.93s/it]
+
+
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   3%|▎         | 2/67 [00:00<00:03, 18.20it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   7%|▋         | 5/67 [00:00<00:03, 19.96it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  12%|█▏        | 8/67 [00:00<00:02, 20.47it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  16%|█▋        | 11/67 [00:00<00:02, 20.78it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  21%|██        | 14/67 [00:00<00:02, 20.94it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  25%|██▌       | 17/67 [00:00<00:02, 21.29it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  30%|██▉       | 20/67 [00:00<00:02, 22.00it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  34%|███▍      | 23/67 [00:01<00:01, 22.59it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  39%|███▉      | 26/67 [00:01<00:01, 23.03it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  43%|████▎     | 29/67 [00:01<00:01, 23.28it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  48%|████▊     | 32/67 [00:01<00:01, 23.44it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  52%|█████▏    | 35/67 [00:01<00:01, 24.80it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  57%|█████▋    | 38/67 [00:01<00:01, 25.81it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  61%|██████    | 41/67 [00:01<00:01, 25.28it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  66%|██████▌   | 44/67 [00:01<00:00, 26.30it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  70%|███████   | 47/67 [00:01<00:00, 26.90it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  76%|███████▌  | 51/67 [00:02<00:00, 28.04it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  82%|████████▏ | 55/67 [00:02<00:00, 29.14it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  88%|████████▊ | 59/67 [00:02<00:00, 29.97it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  94%|█████████▍| 63/67 [00:02<00:00, 30.74it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:02<00:00, 29.36it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:02<00:00, 25.33it/s]
+[INFO:swift] The logging file will be saved in: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v17-20260210-075702/logging.jsonl
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None}.
+wandb: WARNING The `run_name` is currently set to the same value as `TrainingArguments.output_dir`. If this was not intended, please specify a different run name by setting the `TrainingArguments.run_name` parameter.
+wandb: Tracking run with wandb version 0.24.2
+wandb: W&B syncing is set to `offline` in this directory. Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+wandb: Run data is saved locally in /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/wandb/offline-run-20260210_075845-7ahn6agu
+wandb: Detected [huggingface_hub.inference, openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai/
+
+Train:   0%|          | 0/84620 [00:00<?, ?it/s]
+
+0it [00:00, ?it/s][A
+
+
+  0%|          | 0/100 [00:00<?, ?it/s][A[A
+
+
+  1%|          | 1/100 [00:00<00:56,  1.75it/s][A[A
+
+
+  3%|▎         | 3/100 [00:00<00:19,  4.97it/s][A[A
+
+
+  5%|▌         | 5/100 [00:00<00:13,  7.09it/s][A[A
+
+
+  7%|▋         | 7/100 [00:00<00:09,  9.70it/s][A[A
+
+
+  9%|▉         | 9/100 [00:01<00:07, 11.84it/s][A[A
+
+
+ 11%|█         | 11/100 [00:01<00:06, 13.64it/s][A[A
+
+
+ 13%|█▎        | 13/100 [00:01<00:05, 15.08it/s][A[A
+
+
+ 15%|█▌        | 15/100 [00:01<00:05, 16.00it/s][A[A
+
+
+ 17%|█▋        | 17/100 [00:01<00:04, 16.81it/s][A[A
+
+
+ 19%|█▉        | 19/100 [00:01<00:04, 17.24it/s][A[A
+
+
+ 21%|██        | 21/100 [00:01<00:04, 17.74it/s][A[A
+
+
+ 23%|██▎       | 23/100 [00:01<00:04, 18.07it/s][A[A
+
+
+ 25%|██▌       | 25/100 [00:01<00:04, 16.28it/s][A[A
+
+
+ 27%|██▋       | 27/100 [00:02<00:04, 17.13it/s][A[A
+
+
+ 29%|██▉       | 29/100 [00:02<00:03, 17.90it/s][A[A
+
+
+ 31%|███       | 31/100 [00:02<00:03, 17.99it/s][A[A
+
+
+ 33%|███▎      | 33/100 [00:02<00:03, 18.16it/s][A[A
+
+
+ 35%|███▌      | 35/100 [00:02<00:03, 18.59it/s][A[A
+
+
+ 37%|███▋      | 37/100 [00:02<00:03, 18.74it/s][A[A
+
+
+ 39%|███▉      | 39/100 [00:02<00:03, 18.59it/s][A[A
+
+
+ 41%|████      | 41/100 [00:02<00:03, 18.83it/s][A[A
+
+
+ 43%|████▎     | 43/100 [00:02<00:03, 18.92it/s][A[A
+
+
+ 45%|████▌     | 45/100 [00:03<00:02, 19.02it/s][A[A
+
+
+ 47%|████▋     | 47/100 [00:03<00:02, 19.19it/s][A[A
+
+
+ 49%|████▉     | 49/100 [00:03<00:02, 18.98it/s][A[A
+
+
+ 51%|█████     | 51/100 [00:03<00:02, 18.79it/s][A[A
+
+
+ 53%|█████▎    | 53/100 [00:03<00:02, 19.02it/s][A[A
+
+
+ 55%|█████▌    | 55/100 [00:03<00:02, 19.04it/s][A[A
+
+
+ 57%|█████▋    | 57/100 [00:03<00:02, 18.85it/s][A[A
+
+
+ 59%|█████▉    | 59/100 [00:03<00:02, 19.11it/s][A[A
+
+
+ 61%|██████    | 61/100 [00:03<00:02, 19.22it/s][A[A
+
+
+ 63%|██████▎   | 63/100 [00:03<00:01, 18.94it/s][A[A
+
+
+ 65%|██████▌   | 65/100 [00:04<00:01, 18.91it/s][A[A
+
+
+ 67%|██████▋   | 67/100 [00:04<00:01, 19.07it/s][A[A
+
+
+ 69%|██████▉   | 69/100 [00:04<00:01, 19.07it/s][A[A
+
+
+ 71%|███████   | 71/100 [00:04<00:01, 19.04it/s][A[A
+
+
+ 73%|███████▎  | 73/100 [00:04<00:01, 18.85it/s][A[A
+
+
+ 75%|███████▌  | 75/100 [00:04<00:01, 18.70it/s][A[A
+
+
+ 77%|███████▋  | 77/100 [00:04<00:01, 18.53it/s][A[A
+
+
+ 79%|███████▉  | 79/100 [00:04<00:01, 18.47it/s][A[A
+
+
+ 81%|████████  | 81/100 [00:04<00:01, 18.73it/s][A[A
+
+
+ 83%|████████▎ | 83/100 [00:05<00:00, 18.80it/s][A[A
+
+
+ 85%|████████▌ | 85/100 [00:05<00:00, 18.68it/s][A[A
+
+
+ 87%|████████▋ | 87/100 [00:05<00:00, 18.58it/s][A[A
+
+
+ 89%|████████▉ | 89/100 [00:05<00:00, 18.73it/s][A[A
+
+
+ 91%|█████████ | 91/100 [00:05<00:00, 18.82it/s][A[A
+
+
+ 93%|█████████▎| 93/100 [00:05<00:00, 18.67it/s][A[A
+
+
+ 95%|█████████▌| 95/100 [00:05<00:00, 18.60it/s][A[A
+
+
+ 97%|█████████▋| 97/100 [00:05<00:00, 18.71it/s][A[A
+
+
+ 99%|█████████▉| 99/100 [00:05<00:00, 18.55it/s][A[A
+100%|██████████| 100/100 [00:05<00:00, 16.77it/s]
+
+
+1it [00:05,  5.96s/it][A
+
+
+  0%|          | 0/100 [00:00<?, ?it/s][A[A
+
+
+  3%|▎         | 3/100 [00:00<00:04, 20.06it/s][A[A
+
+
+  6%|▌         | 6/100 [00:00<00:04, 20.13it/s][A[A
+
+
+  9%|▉         | 9/100 [00:00<00:04, 20.19it/s][A[A
+
+
+ 12%|█▏        | 12/100 [00:00<00:04, 20.08it/s][A[A
+
+
+ 15%|█▌        | 15/100 [00:00<00:04, 20.02it/s][A[A
+
+
+ 18%|█▊        | 18/100 [00:00<00:04, 20.00it/s][A[A
+
+
+ 21%|██        | 21/100 [00:01<00:03, 20.03it/s][A[A
+
+
+ 24%|██▍       | 24/100 [00:01<00:03, 19.92it/s][A[A
+
+
+ 27%|██▋       | 27/100 [00:01<00:03, 19.98it/s][A[A
+
+
+ 29%|██▉       | 29/100 [00:01<00:03, 19.91it/s][A[A
+
+
+ 32%|███▏      | 32/100 [00:01<00:03, 19.95it/s][A[A
+
+
+ 35%|███▌      | 35/100 [00:01<00:03, 19.96it/s][A[A
+
+
+ 37%|███▋      | 37/100 [00:01<00:03, 19.94it/s][A[A
+
+
+ 40%|████      | 40/100 [00:02<00:03, 19.99it/s][A[A
+
+
+ 43%|████▎     | 43/100 [00:02<00:02, 19.99it/s][A[A
+
+
+ 46%|████▌     | 46/100 [00:02<00:02, 20.01it/s][A[A
+
+
+ 49%|████▉     | 49/100 [00:02<00:02, 20.06it/s][A[A
+
+
+ 52%|█████▏    | 52/100 [00:02<00:02, 20.05it/s][A[A
+
+
+ 55%|█████▌    | 55/100 [00:02<00:02, 20.07it/s][A[A
+
+
+ 58%|█████▊    | 58/100 [00:02<00:02, 20.03it/s][A[A
+
+
+ 61%|██████    | 61/100 [00:03<00:01, 20.03it/s][A[A
+
+
+ 64%|██████▍   | 64/100 [00:03<00:01, 20.05it/s][A[A
+
+
+ 67%|██████▋   | 67/100 [00:03<00:01, 20.06it/s][A[A
+
+
+ 70%|███████   | 70/100 [00:03<00:01, 20.12it/s][A[A
+
+
+ 73%|███████▎  | 73/100 [00:03<00:01, 20.17it/s][A[A
+
+
+ 76%|███████▌  | 76/100 [00:03<00:01, 20.11it/s][A[A
+
+
+ 79%|███████▉  | 79/100 [00:03<00:01, 20.14it/s][A[A
+
+
+ 82%|████████▏ | 82/100 [00:04<00:00, 20.09it/s][A[A
+
+
+ 85%|████████▌ | 85/100 [00:04<00:00, 20.09it/s][A[A
+
+
+ 88%|████████▊ | 88/100 [00:04<00:00, 20.13it/s][A[A
+
+
+ 91%|█████████ | 91/100 [00:04<00:00, 20.15it/s][A[A
+
+
+ 94%|█████████▍| 94/100 [00:04<00:00, 20.15it/s][A[A
+
+
+ 97%|█████████▋| 97/100 [00:04<00:00, 20.06it/s][A[A
+
+
+100%|██████████| 100/100 [00:04<00:00, 20.02it/s][A[A
+100%|██████████| 100/100 [00:04<00:00, 20.05it/s]
+
+
+2it [00:10,  5.39s/it][A
+
+
+  0%|          | 0/100 [00:00<?, ?it/s][A[A
+
+
+  2%|▏         | 2/100 [00:00<00:04, 19.87it/s][A[A
+
+
+  4%|▍         | 4/100 [00:00<00:04, 19.38it/s][A[A
+
+
+  6%|▌         | 6/100 [00:00<00:04, 19.49it/s][A[A
+
+
+  8%|▊         | 8/100 [00:00<00:04, 19.68it/s][A[A
+
+
+ 10%|█         | 10/100 [00:00<00:04, 19.75it/s][A[A
+
+
+ 12%|█▏        | 12/100 [00:00<00:04, 19.80it/s][A[A
+
+
+ 14%|█▍        | 14/100 [00:00<00:04, 19.81it/s][A[A
+
+
+ 16%|█▌        | 16/100 [00:00<00:04, 19.83it/s][A[A
+
+
+ 18%|█▊        | 18/100 [00:00<00:04, 19.86it/s][A[A
+
+
+ 20%|██        | 20/100 [00:01<00:04, 19.88it/s][A[A
+
+
+ 22%|██▏       | 22/100 [00:01<00:03, 19.88it/s][A[A
+
+
+ 24%|██▍       | 24/100 [00:01<00:03, 19.88it/s][A[A
+
+
+ 26%|██▌       | 26/100 [00:01<00:03, 19.68it/s][A[A
+
+
+ 29%|██▉       | 29/100 [00:01<00:03, 19.86it/s][A[A
+
+
+ 31%|███       | 31/100 [00:01<00:03, 19.87it/s][A[A
+
+
+ 33%|███▎      | 33/100 [00:01<00:03, 19.86it/s][A[A
+
+
+ 35%|███▌      | 35/100 [00:01<00:03, 19.82it/s][A[A
+
+
+ 37%|███▋      | 37/100 [00:02<00:06, 10.12it/s][A[A
+
+
+ 39%|███▉      | 39/100 [00:02<00:05, 11.82it/s][A[A
+
+
+ 41%|████      | 41/100 [00:02<00:04, 13.42it/s][A[A
+
+
+ 44%|████▍     | 44/100 [00:02<00:03, 15.30it/s][A[A
+
+
+ 46%|████▌     | 46/100 [00:02<00:03, 16.29it/s][A[A
+
+
+ 48%|████▊     | 48/100 [00:02<00:03, 17.15it/s][A[A
+
+
+ 50%|█████     | 50/100 [00:02<00:02, 17.83it/s][A[A
+
+
+ 52%|█████▏    | 52/100 [00:02<00:02, 18.38it/s][A[A
+
+
+ 54%|█████▍    | 54/100 [00:03<00:02, 18.82it/s][A[A
+
+
+ 56%|█████▌    | 56/100 [00:03<00:02, 19.11it/s][A[A
+
+
+ 59%|█████▉    | 59/100 [00:03<00:02, 19.47it/s][A[A
+
+
+ 62%|██████▏   | 62/100 [00:03<00:01, 19.51it/s][A[A
+
+
+ 64%|██████▍   | 64/100 [00:03<00:01, 19.43it/s][A[A
+
+
+ 66%|██████▌   | 66/100 [00:03<00:01, 19.47it/s][A[A
+
+
+ 68%|██████▊   | 68/100 [00:03<00:01, 19.57it/s][A[A
+
+
+ 70%|███████   | 70/100 [00:03<00:01, 19.50it/s][A[A
+
+
+ 72%|███████▏  | 72/100 [00:03<00:01, 19.63it/s][A[A
+
+
+ 74%|███████▍  | 74/100 [00:04<00:01, 19.67it/s][A[A
+
+
+ 76%|███████▌  | 76/100 [00:04<00:01, 19.35it/s][A[A
+
+
+ 78%|███████▊  | 78/100 [00:04<00:01, 19.51it/s][A[A
+
+
+ 80%|████████  | 80/100 [00:04<00:01, 19.63it/s][A[A
+
+
+ 82%|████████▏ | 82/100 [00:04<00:00, 19.74it/s][A[A
+
+
+ 84%|████████▍ | 84/100 [00:04<00:00, 19.74it/s][A[A
+
+
+ 86%|████████▌ | 86/100 [00:04<00:00, 19.46it/s][A[A
+
+
+ 88%|████████▊ | 88/100 [00:04<00:00, 19.60it/s][A[A
+
+
+ 90%|█████████ | 90/100 [00:04<00:00, 19.69it/s][A[A
+
+
+ 93%|█████████▎| 93/100 [00:05<00:00, 19.63it/s][A[A
+
+
+ 95%|█████████▌| 95/100 [00:05<00:00, 19.51it/s][A[A
+
+
+ 97%|█████████▋| 97/100 [00:05<00:00, 19.61it/s][A[A
+
+
+ 99%|█████████▉| 99/100 [00:05<00:00, 19.70it/s][A[A
+100%|██████████| 100/100 [00:05<00:00, 18.52it/s]
+
+
+3it [00:16,  5.40s/it][A
+
+
+  0%|          | 0/100 [00:00<?, ?it/s][A[A
+
+
+  2%|▏         | 2/100 [00:00<00:05, 19.18it/s][A[A
+
+
+  4%|▍         | 4/100 [00:00<00:05, 18.74it/s][A[A
+
+
+  6%|▌         | 6/100 [00:00<00:04, 18.89it/s][A[A
+
+
+  8%|▊         | 8/100 [00:00<00:04, 19.30it/s][A[A
+
+
+ 10%|█         | 10/100 [00:00<00:04, 19.34it/s][A[A
+
+
+ 12%|█▏        | 12/100 [00:00<00:04, 19.26it/s][A[A
+
+
+ 14%|█▍        | 14/100 [00:00<00:04, 19.23it/s][A[A
+
+
+ 16%|█▌        | 16/100 [00:00<00:04, 19.23it/s][A[A
+
+
+ 18%|█▊        | 18/100 [00:00<00:04, 19.23it/s][A[A
+
+
+ 20%|██        | 20/100 [00:01<00:04, 19.41it/s][A[A
+
+
+ 22%|██▏       | 22/100 [00:01<00:04, 19.36it/s][A[A
+
+
+ 24%|██▍       | 24/100 [00:01<00:03, 19.31it/s][A[A
+
+
+ 26%|██▌       | 26/100 [00:01<00:03, 19.17it/s][A[A
+
+
+ 28%|██▊       | 28/100 [00:01<00:03, 19.35it/s][A[A
+
+
+ 30%|███       | 30/100 [00:01<00:03, 19.49it/s][A[A
+
+
+ 32%|███▏      | 32/100 [00:01<00:03, 19.41it/s][A[A
+
+
+ 34%|███▍      | 34/100 [00:01<00:03, 19.51it/s][A[A
+
+
+ 36%|███▌      | 36/100 [00:01<00:03, 19.63it/s][A[A
+
+
+ 38%|███▊      | 38/100 [00:01<00:03, 19.45it/s][A[A
+
+
+ 40%|████      | 40/100 [00:02<00:03, 19.18it/s][A[A
+
+
+ 42%|████▏     | 42/100 [00:02<00:02, 19.36it/s][A[A
+
+
+ 44%|████▍     | 44/100 [00:02<00:02, 19.29it/s][A[A
+
+
+ 46%|████▌     | 46/100 [00:02<00:02, 19.37it/s][A[A
+
+
+ 48%|████▊     | 48/100 [00:02<00:02, 19.29it/s][A[A
+
+
+ 50%|█████     | 50/100 [00:02<00:02, 19.05it/s][A[A
+
+
+ 52%|█████▏    | 52/100 [00:02<00:02, 19.32it/s][A[A
+
+
+ 54%|█████▍    | 54/100 [00:02<00:02, 19.50it/s][A[A
+
+
+ 56%|█████▌    | 56/100 [00:02<00:02, 19.21it/s][A[A
+
+
+ 58%|█████▊    | 58/100 [00:03<00:02, 19.41it/s][A[A
+
+
+ 61%|██████    | 61/100 [00:03<00:01, 19.69it/s][A[A
+
+
+ 63%|██████▎   | 63/100 [00:03<00:01, 19.32it/s][A[A
+
+
+ 65%|██████▌   | 65/100 [00:03<00:01, 19.25it/s][A[A
+
+
+ 68%|██████▊   | 68/100 [00:03<00:02, 14.59it/s][A[A
+
+
+ 70%|███████   | 70/100 [00:03<00:01, 15.57it/s][A[A
+
+
+ 72%|███████▏  | 72/100 [00:03<00:01, 16.44it/s][A[A
+
+
+ 74%|███████▍  | 74/100 [00:03<00:01, 17.28it/s][A[A
+
+
+ 76%|███████▌  | 76/100 [00:04<00:01, 17.63it/s][A[A
+
+
+ 78%|███████▊  | 78/100 [00:04<00:01, 17.88it/s][A[A
+
+
+ 80%|████████  | 80/100 [00:04<00:01, 18.26it/s][A[A
+
+
+ 82%|████████▏ | 82/100 [00:04<00:00, 18.47it/s][A[A
+
+
+ 84%|████████▍ | 84/100 [00:04<00:00, 18.75it/s][A[A
+
+
+ 86%|████████▌ | 86/100 [00:04<00:00, 18.64it/s][A[A
+
+
+ 88%|████████▊ | 88/100 [00:04<00:00, 18.81it/s][A[A
+
+
+ 90%|█████████ | 90/100 [00:04<00:00, 18.91it/s][A[A
+
+
+ 92%|█████████▏| 92/100 [00:04<00:00, 19.02it/s][A[A
+
+
+ 94%|█████████▍| 94/100 [00:05<00:00, 19.11it/s][A[A
+
+
+ 96%|█████████▌| 96/100 [00:05<00:00, 19.14it/s][A[A
+
+
+ 98%|█████████▊| 98/100 [00:05<00:00, 18.95it/s][A[A
+
+
+100%|██████████| 100/100 [00:05<00:00, 19.22it/s][A[A
+100%|██████████| 100/100 [00:05<00:00, 18.77it/s]
+
+
+4it [00:21,  5.37s/it][A
+4it [00:21,  5.42s/it]
+Traceback (most recent call last):
+  File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/cli/rlhf.py", line 5, in <module>
+    rlhf_main()
+  File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/train/rlhf.py", line 96, in rlhf_main
+    return SwiftRLHF(args).main()
+  File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/base.py", line 46, in main
+    result = self.run()
+  File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/train/sft.py", line 143, in run
+    return self.train(trainer)
+  File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/train/sft.py", line 202, in train
+    trainer.train(trainer.args.resume_from_checkpoint)
+  File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/trainers/mixin.py", line 266, in train
+    res = super().train(*args, **kwargs)
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+    return inner_training_loop(
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/trainer.py", line 4014, in training_step
+    inputs = self._prepare_inputs(inputs)
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/extras/profiling.py", line 87, in wrapper
+    return func(self, *args, **kwargs)
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 900, in _prepare_inputs
+    self._buffered_inputs = split_tensor_dict(
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 225, in split_tensor_dict
+    return [
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 226, in <listcomp>
+    {
+  File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 227, in <dictcomp>
+    key: tensor[i * chunk_size : (i + 1) * chunk_size] if tensor is not None else None
+TypeError: 'int' object is not subscriptable
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/cli/rlhf.py", line 5, in <module>
+[rank0]:     rlhf_main()
+[rank0]:   File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/train/rlhf.py", line 96, in rlhf_main
+[rank0]:     return SwiftRLHF(args).main()
+[rank0]:   File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/base.py", line 46, in main
+[rank0]:     result = self.run()
+[rank0]:   File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/train/sft.py", line 143, in run
+[rank0]:     return self.train(trainer)
+[rank0]:   File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/train/sft.py", line 202, in train
+[rank0]:     trainer.train(trainer.args.resume_from_checkpoint)
+[rank0]:   File "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/trainers/mixin.py", line 266, in train
+[rank0]:     res = super().train(*args, **kwargs)
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+[rank0]:     return inner_training_loop(
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/transformers/trainer.py", line 4014, in training_step
+[rank0]:     inputs = self._prepare_inputs(inputs)
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/extras/profiling.py", line 87, in wrapper
+[rank0]:     return func(self, *args, **kwargs)
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 900, in _prepare_inputs
+[rank0]:     self._buffered_inputs = split_tensor_dict(
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 225, in split_tensor_dict
+[rank0]:     return [
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 226, in <listcomp>
+[rank0]:     {
+[rank0]:   File "/qiuyeqing/tools/miniconda3/envs/prl/lib/python3.10/site-packages/trl/trainer/grpo_trainer.py", line 227, in <dictcomp>
+[rank0]:     key: tensor[i * chunk_size : (i + 1) * chunk_size] if tensor is not None else None
+[rank0]: TypeError: 'int' object is not subscriptable
+[rank0]:[W210 07:59:15.521773226 ProcessGroupNCCL.cpp:1538] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+
+ERROR conda.cli.main_run:execute(127): `conda run bash scripts/mr/mr_qwen_qwen.sh` failed. (See above for error)
+run sh: `/qiuyeqing/tools/miniconda3/envs/prl/bin/python3.10 /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/cli/rlhf.py --rlhf_type grpo --model Qwen/Qwen2.5-7B-Instruct --model_type qwen2_5 --dataset datasets/original/mr_train.jsonl --val_dataset datasets/original/mr_val.jsonl --reward_funcs accuracy format --torch_dtype bfloat16 --gradient_checkpointing_kwargs {"use_reentrant": false} --use_lmdeploy false --use_vllm true --vllm_gpu_memory_utilization 0.5 --train_type lora --lora_rank 8 --lora_alpha 32 --seed 5 --max_completion_length 1024 --num_train_epochs 10 --per_device_train_batch_size 4 --per_device_eval_batch_size 4 --learning_rate 1e-6 --gradient_accumulation_steps 1 --eval_steps 100 --save_steps 100 --save_total_limit 20 --max_length 2048 --output_dir output --warmup_ratio 0 --dataloader_num_workers 0 --dataset_num_proc 4 --num_generations 4 --temperature 0.9 --report_to wandb --logging_steps 5 --system examples/train/grpo/prompt.txt --log_completions true --num_iterations 1 --num_infer_workers 1`
+⚙️  Running in WANDB offline mode
+Downloading Model from https://www.modelscope.cn to directory: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2.5-7B-Instruct
+Downloading Model from https://www.modelscope.cn to directory: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2.5-7B-Instruct
+INFO 02-10 07:57:33 [__init__.py:216] Automatically detected platform cuda.
+Downloading Model from https://www.modelscope.cn to directory: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2.5-7B-Instruct
+INFO 02-10 07:58:11 [__init__.py:742] Resolved architecture: Qwen2ForCausalLM
+INFO 02-10 07:58:11 [__init__.py:1815] Using max model len 32768
+INFO 02-10 07:58:11 [parallel.py:348] Disabling V1 multiprocessing for external launcher.
+INFO 02-10 07:58:11 [scheduler.py:222] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 02-10 07:58:12 [core.py:76] Initializing a V1 LLM engine (v0.10.2) with config: model='/qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct', speculative_config=None, tokenizer='/qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=True, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, decoding_config=DecodingConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_backend=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":1,"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 02-10 07:58:14 [parallel_state.py:1165] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+INFO 02-10 07:58:14 [topk_topp_sampler.py:58] Using FlashInfer for top-p & top-k sampling.
+INFO 02-10 07:58:14 [gpu_model_runner.py:2338] Starting to load model /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct...
+INFO 02-10 07:58:15 [gpu_model_runner.py:2370] Loading model from scratch...
+INFO 02-10 07:58:15 [cuda.py:362] Using Flash Attention backend on V1 engine.
+INFO 02-10 07:58:31 [default_loader.py:268] Loading weights took 15.77 seconds
+INFO 02-10 07:58:31 [gpu_model_runner.py:2392] Model loading took 14.2488 GiB and 16.079029 seconds
+INFO 02-10 07:58:36 [backends.py:539] Using cache directory: /root/.cache/vllm/torch_compile_cache/2051a50d92/rank_0_0/backbone for vLLM's torch.compile
+INFO 02-10 07:58:36 [backends.py:550] Dynamo bytecode transform time: 4.14 s
+INFO 02-10 07:58:38 [backends.py:161] Directly load the compiled graph(s) for dynamic shape from the cache, took 1.909 s
+INFO 02-10 07:58:40 [monitor.py:34] torch.compile takes 4.14 s in total
+INFO 02-10 07:58:41 [gpu_worker.py:298] Available KV cache memory: 24.82 GiB
+INFO 02-10 07:58:41 [kv_cache_utils.py:864] GPU KV cache size: 464,832 tokens
+INFO 02-10 07:58:41 [kv_cache_utils.py:868] Maximum concurrency for 32,768 tokens per request: 14.19x
+INFO 02-10 07:58:45 [gpu_model_runner.py:3118] Graph capturing finished in 3 secs, took 0.48 GiB
+INFO 02-10 07:58:45 [gpu_worker.py:391] Free memory on device (49.85/79.25 GiB) on startup. Desired GPU memory utilization is (0.5, 39.63 GiB). Actual usage is 14.25 GiB for weight, 0.53 GiB for peak activation, 0.02 GiB for non-torch memory, and 0.48 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=25982411776` to fit into requested memory, or `--kv-cache-memory=36955628544` to fully utilize gpu memory. Current kv cache memory in use is 26655597568 bytes.
+INFO 02-10 07:58:45 [core.py:218] init engine (profile, create kv cache, warmup model) took 13.19 seconds
+WARNING 02-10 07:58:47 [topk_topp_sampler.py:113] FlashInfer 0.2.3+ does not support per-request generators. Falling back to PyTorch-native implementation.
+[1;34mwandb[0m: 
+[1;34mwandb[0m: You can sync this run to the cloud by running:
+[1;34mwandb[0m: [1mwandb sync /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/wandb/offline-run-20260210_075845-7ahn6agu[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/offline-run-20260210_075845-7ahn6agu/logs[0m
+

@@ -95,10 +95,12 @@ class VllmEngine(InferEngine):
             enable_sleep_mode=enable_sleep_mode,
             engine_kwargs=engine_kwargs,
         )
+        # Store device for later use (vLLM 0.10.2 doesn't have device attribute on EngineArgs)
+        vllm_device = getattr(self.engine_args, 'device', device)
         context, npu_context = patch_vllm(num_infer_workers * get_node_setting()[1],
-                                          self.engine_args.device), nullcontext()
+                                          vllm_device), nullcontext()
         if tensor_parallel_size == 1 or pipeline_parallel_size == 1:
-            npu_context = patch_npu_vllm(self.engine_args.device)
+            npu_context = patch_npu_vllm(vllm_device)
         with context, npu_context:
             self._prepare_engine()
         self._load_generation_config()
@@ -158,6 +160,11 @@ class VllmEngine(InferEngine):
         if self.config.architectures is None:
             architectures = {'deepseek_vl2': ['DeepseekVLV2ForCausalLM']}[self.model_meta.model_type]
             engine_kwargs['hf_overrides'] = {'architectures': architectures}
+
+        # Check if 'device' parameter is supported by EngineArgs (vLLM version compatibility)
+        if 'device' in parameters:
+            engine_kwargs['device'] = device
+
         engine_args = engine_cls(
             model=self.model_dir,
             dtype=dtype_mapping[model_info.torch_dtype],
@@ -172,7 +179,6 @@ class VllmEngine(InferEngine):
             trust_remote_code=True,
             enable_prefix_caching=enable_prefix_caching,
             distributed_executor_backend=distributed_executor_backend,
-            device=device,
             **engine_kwargs,
         )
         if distributed_executor_backend == 'external_launcher':

@@ -58,11 +58,11 @@ require_file "datasets/original/${DATASET_NAME}_val.jsonl"
 require_file "datasets/original/${DATASET_NAME}_infer.jsonl"
 require_file "requirements.txt"
 
-# Script hardcodes CUDA_VISIBLE_DEVICES=0,1 and uses LMDeploy in GRPO path.
+# Check for GPU availability (single GPU is sufficient).
 if command -v nvidia-smi >/dev/null 2>&1; then
   GPU_COUNT="$(nvidia-smi --list-gpus | wc -l | tr -d ' ')"
-  if [[ "${GPU_COUNT}" -lt 2 ]]; then
-    echo "Preflight failed: this setup expects >=2 GPUs (scripts hardcode CUDA_VISIBLE_DEVICES=0,1)."
+  if [[ "${GPU_COUNT}" -lt 1 ]]; then
+    echo "Preflight failed: no GPUs detected."
     exit 1
   fi
 else
@@ -81,11 +81,10 @@ required = [
     "peft",
     "modelscope",
     "trl",
-    "lmdeploy",
+    "vllm",
     "wandb",
     "rouge",
     "mosestokenizer",
-    "easse",
 ]
 missing = [m for m in required if importlib.util.find_spec(m) is None]
 if missing:

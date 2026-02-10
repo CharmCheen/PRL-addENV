@@ -4,9 +4,9 @@ export NUMBER_OF_PROMPTS=10
 export ADVERSARIAL=0
 export REASONING=True
 
-CUDA_VISIBLE_DEVICES=0,1 \
-NPROC_PER_NODE=1 \
-MASTER_PORT=29516 \
+# Single GPU setup - use direct python call instead of torch.distributed.run
+# Lower vLLM GPU memory utilization to avoid OOM (training model + vLLM on same GPU)
+CUDA_VISIBLE_DEVICES=0 \
 swift rlhf \
     --rlhf_type grpo \
     --model Qwen/Qwen2.5-7B-Instruct \
@@ -16,7 +16,9 @@ swift rlhf \
     --reward_funcs accuracy format \
     --torch_dtype bfloat16 \
     --gradient_checkpointing_kwargs '{"use_reentrant": false}' \
-    --use_lmdeploy true \
+    --use_lmdeploy false \
+    --use_vllm true \
+    --vllm_gpu_memory_utilization 0.5 \
     --train_type lora \
     --lora_rank 8 \
     --lora_alpha 32 \
@@ -33,7 +35,7 @@ swift rlhf \
     --max_length 2048 \
     --output_dir output \
     --warmup_ratio 0 \
-    --dataloader_num_workers 1 \
+    --dataloader_num_workers 0 \
     --dataset_num_proc 4 \
     --num_generations 4 \
     --temperature 0.9 \

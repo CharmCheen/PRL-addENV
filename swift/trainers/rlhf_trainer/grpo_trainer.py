@@ -741,9 +741,11 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
 
         # we only need to compute the logits for the completion tokens
         labels = outputs.pop('labels')
-        logits_to_keep = (labels.shape[-1] - (torch.ne(labels, -100).int().argmax(-1))).max().item()
-        outputs['logits_to_keep'] = logits_to_keep
-        outputs['completion_mask'] = labels[:, -logits_to_keep:] != -100
+        logits_to_keep_value = int((labels.shape[-1] - (torch.ne(labels, -100).int().argmax(-1))).max().item())
+        # Store as a tensor (batch_size,) to make it sliceable by TRL's split_tensor_dict
+        batch_size = labels.shape[0]
+        outputs['logits_to_keep'] = torch.full((batch_size,), logits_to_keep_value, dtype=torch.long, device=labels.device)
+        outputs['completion_mask'] = labels[:, -logits_to_keep_value:] != -100
 
         with torch.no_grad():
             if self.old_policy:
@@ -876,7 +878,17 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
     @profiling_decorator
     def _get_per_token_logps(self, model, inputs):
         from trl.trainer.utils import selective_log_softmax
-        logits_to_keep = inputs['logits_to_keep']
+        # Normalize logits_to_keep to int for backward compatibility
+        logits_to_keep_raw = inputs['logits_to_keep']
+        if isinstance(logits_to_keep_raw, torch.Tensor):
+            # If it's a 0-d or 1-d tensor, take the max value
+            logits_to_keep = int(logits_to_keep_raw.max().item())
+        elif isinstance(logits_to_keep_raw, (list, tuple)):
+            # If it's a list or tuple, take the max
+            logits_to_keep = int(max(logits_to_keep_raw))
+        else:
+            # If it's already an int, use it directly
+            logits_to_keep = int(logits_to_keep_raw)
         input_ids = inputs['input_ids']
         unwrapped_model = self.accelerator.unwrap_model(model)
         parameters = inspect.signature(unwrapped_model.forward).parameters

@@ -1,0 +1,2 @@
+# Optional distributed acceleration.
+deepspeed>=0.14; platform_system != "Windows"

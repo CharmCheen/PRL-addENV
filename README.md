@@ -65,6 +65,25 @@ To evaluate PRL on simplification:
 ./scripts/sim/sim_qwen_qwen.sh
 ```
 
+## Non-interactive Platform Run
+
+For compute platforms, you can use the non-interactive launcher without changing training logic.
+
+1. Prepare env vars (optional but recommended):
+```bash
+cp scripts/platform/platform.env.example scripts/platform/platform.env
+set -a && source scripts/platform/platform.env && set +a
+```
+
+2. Run one task:
+```bash
+bash scripts/platform/run_prl_non_interactive.sh mr
+# or: sum / sim
+```
+
+The launcher reuses original scripts under `scripts/<task>/`, auto-loads `scripts/platform/platform.env` when present,
+and runs `scripts/platform/preflight_prl.sh` before training to fail fast on missing dependencies/GPU/files.
+
 ## 📄 Citation
 
 If you find our work useful, please consider citing:

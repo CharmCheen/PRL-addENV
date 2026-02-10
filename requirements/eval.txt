@@ -1,0 +1,2 @@
+# Optional evaluation dependencies.
+evalscope>=0.9.0

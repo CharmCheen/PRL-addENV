@@ -1,0 +1,2 @@
+{"loss": 0.0, "grad_norm": 0.0, "learning_rate": 1e-06, "memory(GiB)": 70.19, "train_speed(iter/s)": 0.010284, "epoch": 0.00011818, "global_step/max_steps": "1/84620", "percentage": "0.00%", "elapsed_time": "25s", "remaining_time": "25d 5h 6m 2s"}
+{"loss": 0.03086121, "grad_norm": 0.00687766, "learning_rate": 1e-06, "memory(GiB)": 72.59, "train_speed(iter/s)": 0.025106, "epoch": 0.00059088, "global_step/max_steps": "5/84620", "percentage": "0.01%", "elapsed_time": "2m 7s", "remaining_time": "25d 0h 5m 12s"}

@@ -152,9 +152,6 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
         kwargs['data_collator'] = lambda features: features
         self._metrics = {'train': defaultdict(list), 'eval': defaultdict(list)}
 
-        # Initialize shuffle_dataset for TRL 0.17.0 compatibility
-        self.shuffle_dataset = getattr(args, 'shuffle_dataset', True)
-
         use_vllm = args.use_vllm
         use_lmdeploy = args.use_lmdeploy
 
@@ -319,6 +316,26 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
         self._buffered_inputs = [None] * args.gradient_accumulation_steps
         if self.args.async_generate:
             self.add_callback(GRPOCallback(self))
+
+        # TRL 0.17 compatibility: ensure required attributes exist
+        self._ensure_trl_compat_attrs()
+
+    def _ensure_trl_compat_attrs(self):
+        """Ensure TRL 0.17 compatibility attributes are initialized."""
+        if not hasattr(self, 'shuffle_dataset'):
+            self.shuffle_dataset = getattr(self.args, 'shuffle_dataset', True)
+        if not hasattr(self, '_textual_logs'):
+            self._textual_logs = defaultdict(list)
+        if not hasattr(self, 'num_completions_to_print'):
+            self.num_completions_to_print = getattr(self.args, 'num_completions_to_print', 0)
+
+    def log(self, logs: Dict[str, float]) -> None:
+        """Override log to ensure TRL 0.17 compatibility and avoid version conflicts."""
+        self._ensure_trl_compat_attrs()
+        # Skip TRL's log method to avoid version-specific issues
+        # Call Trainer.log directly instead of HFGRPOTrainer.log
+        from transformers import Trainer
+        Trainer.log(self, logs)
 
     def split_batches(self):
         """Sync weights in batches

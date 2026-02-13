@@ -1,0 +1,23 @@
+# Extracted protocol snippets from docs/paper/base_ref.pdf (via PDF stream decode)
+
+[Snippet A | stream 12]
+"The scoring function ... used in all classification tasks is accuracy."
+"We set the number of test prompts to n_test = 10."
+Source: docs/paper/base_ref.pdf (decompressed text stream index 12)
+
+[Snippet B | stream 18]
+"... evaluate PRL on the MR classification dataset while varying the number of sampled prompts: n_test = 1, 5, 10, and 15."
+"Each configuration is run three times, and we report the average accuracy."
+Source: docs/paper/base_ref.pdf (decompressed text stream index 18)
+
+[Snippet C | stream 14]
+"Table 1: Accuracy on classification tasks, averaged over three runs."
+Source: docs/paper/base_ref.pdf (decompressed text stream index 14)
+
+[Snippet D | stream 26]
+"n_test: number of prompts during training/Prompt Selection"
+Source: docs/paper/base_ref.pdf (decompressed text stream index 26)
+
+[Snippet E | stream 20]
+"... we recommend using ten prompts ..."
+Source: docs/paper/base_ref.pdf (decompressed text stream index 20)

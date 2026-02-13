@@ -50,10 +50,10 @@ JSON includes:
 
 ## Artifact Layout
 - Source files stay under `repro/mr_paper/` (scripts + this README).
-- Runtime artifacts should be stored in `repro/mr_paper/runs/<timestamp>/`.
-- Keep `results/` as temporary staging only; move logs/json to `runs/` after each session.
+- `results/` is temporary staging for ad-hoc eval outputs.
+- `runs/` is long-term archive for reproducible runs.
+- Paper-aligned 3-seed outputs are centralized under `runs/paper_align/`.
 - Recommended commit policy: do not commit large run artifacts (`.log`, `.json`).
-- Track only reproducible code/docs in git; keep experimental outputs local.
 
 ## Quick Start
 
@@ -114,5 +114,15 @@ bash repro/mr_paper/run_mr_paper_align.sh
 ```
 
 Output:
-- per-seed json/log: `repro/mr_paper/results/mr_paper_align_seed*.json|.log`
-- aggregate summary: `repro/mr_paper/results/summary_mr_paper_align.json`
+- script默认输出：`repro/mr_paper/results/*`
+- 规范归档：`repro/mr_paper/runs/paper_align/`（见下节）
+
+## 产物目录规范
+- 固定目录：`repro/mr_paper/runs/paper_align/`
+- 归档文件命名：
+  - `seed42.log`, `seed42.json`
+  - `seed43.log`, `seed43.json`
+  - `seed44.log`, `seed44.json`
+  - `summary.json`, `summary.md`
+- `repro/mr_paper/results/` 只用于临时中间产物，不作为最终归档。
+- 复现实验提交时，优先引用 `runs/paper_align/summary.*`。

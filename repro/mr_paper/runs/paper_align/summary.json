@@ -1,0 +1,65 @@
+{
+  "timestamp_utc": "2026-02-13T14:56:15.775082+00:00",
+  "n_runs": 3,
+  "runs": [
+    {
+      "seed": 42,
+      "accuracy": 0.91,
+      "correct": 1820,
+      "total": 2000,
+      "result_json": "repro/mr_paper/runs/paper_align/seed42.json",
+      "log_file": "repro/mr_paper/runs/paper_align/seed42.log",
+      "meta": {
+        "selection_mode": "best",
+        "number_of_prompts": 10,
+        "temperature": 0.9,
+        "top_p": 0.9,
+        "max_new_tokens": 384,
+        "test_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/mr_test.jsonl",
+        "checkpoint": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v31-20260210-185134/checkpoint-2000"
+      }
+    },
+    {
+      "seed": 43,
+      "accuracy": 0.9105,
+      "correct": 1821,
+      "total": 2000,
+      "result_json": "repro/mr_paper/runs/paper_align/seed43.json",
+      "log_file": "repro/mr_paper/runs/paper_align/seed43.log",
+      "meta": {
+        "selection_mode": "best",
+        "number_of_prompts": 10,
+        "temperature": 0.9,
+        "top_p": 0.9,
+        "max_new_tokens": 384,
+        "test_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/mr_test.jsonl",
+        "checkpoint": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v31-20260210-185134/checkpoint-2000"
+      }
+    },
+    {
+      "seed": 44,
+      "accuracy": 0.91,
+      "correct": 1820,
+      "total": 2000,
+      "result_json": "repro/mr_paper/runs/paper_align/seed44.json",
+      "log_file": "repro/mr_paper/runs/paper_align/seed44.log",
+      "meta": {
+        "selection_mode": "best",
+        "number_of_prompts": 10,
+        "temperature": 0.9,
+        "top_p": 0.9,
+        "max_new_tokens": 384,
+        "test_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/mr_test.jsonl",
+        "checkpoint": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/v31-20260210-185134/checkpoint-2000"
+      }
+    }
+  ],
+  "mean_accuracy": 0.9101666666666667,
+  "std_accuracy": 0.0002886751345947811,
+  "protocol_checks": {
+    "test_file_mr_test": true,
+    "selection_mode_best": true,
+    "number_of_prompts_10": true,
+    "decode_0.9_0.9_384": true
+  }
+}

@@ -33,3 +33,14 @@ venv/
 dist/
 build/
 .cache/
+
+# MR repro runtime artifacts
+repro/mr_paper/runs/**
+repro/mr_paper/results/**/*.log
+repro/mr_paper/results/**/*.json
+repro/mr_paper/results/*.log
+repro/mr_paper/results/*.json
+
+# Local audit/reference PDFs
+docs/base_ref.pdf
+docs/idea初版.pdf

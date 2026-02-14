@@ -1,0 +1,22 @@
+=== SUM Paper Eval ===
+BASE_MODEL=/qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+CHECKPOINT=none
+SEED=42 LIMIT=20
+DECODE: temperature=0.9, top_p=0.9, max_new_tokens=8
+/qiuyeqing/tools/miniconda3/envs/prl_clean/lib/python3.10/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+[INFO:swift] Successfully registered `/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/dataset/data/dataset_info.json`.
+[INFO:swift] rank: -1, local_rank: -1, world_size: 1, local_world_size: 1
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+[INFO:swift] Setting torch_dtype: torch.bfloat16
+[INFO:swift] args.result_path: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/result/Qwen2.5-7B-Instruct/infer_result/20260213-160700.jsonl
+[INFO:swift] Setting args.eval_human: True
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+/qiuyeqing/tools/miniconda3/envs/prl_clean/lib/python3.10/site-packages/torch/cuda/__init__.py:182: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 304: OS call failed or operation not supported on this OS (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+`torch_dtype` is deprecated! Use `dtype` instead!
+[INFO:swift] model_kwargs: {'device_map': 'cpu'}
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:00,  7.34it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  6.91it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  7.08it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00,  8.16it/s]
+[INFO:swift] default_system: You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+Terminated

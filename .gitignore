@@ -1,6 +1,7 @@
 # Output and checkpoints
 output/
 logs_*.log
+logs/**/*.log
 
 # Wandb
 wandb/
@@ -33,6 +34,7 @@ venv/
 dist/
 build/
 .cache/
+repro/legacy/OUT_literal/
 
 # MR repro runtime artifacts
 repro/mr_paper/runs/**

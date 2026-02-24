@@ -29,40 +29,73 @@ count_visible_gpus() {
   if [[ -n "${CUDA_VISIBLE_DEVICES:-}" ]]; then
     local cleaned
     cleaned="$(echo "${CUDA_VISIBLE_DEVICES}" | tr -d ' ')"
-    if [[ -z "${cleaned}" ]]; then
-      echo "1"
+    if [[ -n "${cleaned}" ]]; then
+      awk -F',' '{print NF}' <<<"${cleaned}"
       return
     fi
-    awk -F',' '{print NF}' <<<"${cleaned}"
-    return
   fi
-  python - <<'PY'
-try:
-    import torch
-    n = int(torch.cuda.device_count())
-    print(n if n > 0 else 1)
-except Exception:
-    print(1)
-PY
+  if command -v nvidia-smi >/dev/null 2>&1; then
+    local n
+    n="$(nvidia-smi -L 2>/dev/null | grep -c '^GPU' || true)"
+    if [[ "${n}" -gt 0 ]]; then
+      echo "${n}"
+      return
+    fi
+  fi
+  echo "1"
 }
 
-NPROC_PER_NODE="${NPROC_PER_NODE:-$(count_visible_gpus)}"
+VISIBLE_GPUS="$(count_visible_gpus)"
+NPROC_PER_NODE="${NPROC_PER_NODE:-${VISIBLE_GPUS}}"
 if ! [[ "${NPROC_PER_NODE}" =~ ^[0-9]+$ ]] || [[ "${NPROC_PER_NODE}" -lt 1 ]]; then
   echo "[ERROR] NPROC_PER_NODE must be a positive integer, got '${NPROC_PER_NODE}'"
   exit 1
 fi
+if [[ "${NPROC_PER_NODE}" -gt "${VISIBLE_GPUS}" ]]; then
+  echo "[WARN] NPROC_PER_NODE=${NPROC_PER_NODE} > visible_gpus=${VISIBLE_GPUS}; auto-downgrade."
+  NPROC_PER_NODE="${VISIBLE_GPUS}"
+fi
 
 export MASTER_ADDR="127.0.0.1"
-export MASTER_PORT="${MASTER_PORT:-29501}"
+if [[ -z "${MASTER_PORT:-}" ]]; then
+  MASTER_PORT="$(python - <<'PY'
+import socket
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(('', 0))
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print(s.getsockname()[1])
+PY
+)"
+fi
+export MASTER_PORT
 export TORCHELASTIC_USE_AGENT_STORE="${TORCHELASTIC_USE_AGENT_STORE:-0}"
+export TORCH_NCCL_ASYNC_ERROR_HANDLING="${TORCH_NCCL_ASYNC_ERROR_HANDLING:-1}"
+export NCCL_ASYNC_ERROR_HANDLING="${NCCL_ASYNC_ERROR_HANDLING:-1}"
+export NCCL_IB_DISABLE="${NCCL_IB_DISABLE:-1}"
+export NCCL_DEBUG="${NCCL_DEBUG:-WARN}"
+export TORCH_DISTRIBUTED_DEBUG="${TORCH_DISTRIBUTED_DEBUG:-DETAIL}"
+
+choose_primary_iface() {
+  if ! command -v ip >/dev/null 2>&1; then
+    return 1
+  fi
+  ip -o link show \
+    | awk -F': ' '{print $2}' \
+    | sed -E 's/@.*$//' \
+    | grep -Ev '^(lo|docker0|veth.*|br-.*|cni.*|flannel.*)$' \
+    | head -n1
+}
 
 if [[ -z "${NCCL_SOCKET_IFNAME:-}" ]]; then
-  if ip link show eth0 >/dev/null 2>&1; then
-    export NCCL_SOCKET_IFNAME="eth0"
+  if [[ "${MASTER_ADDR}" == "127.0.0.1" || "${MASTER_ADDR}" == "localhost" ]]; then
+    export NCCL_SOCKET_IFNAME="lo"
+  elif iface="$(choose_primary_iface)"; [[ -n "${iface:-}" ]]; then
+    export NCCL_SOCKET_IFNAME="${iface}"
   else
     export NCCL_SOCKET_IFNAME="^lo,docker0"
   fi
 fi
+export GLOO_SOCKET_IFNAME="${GLOO_SOCKET_IFNAME:-${NCCL_SOCKET_IFNAME}}"
 
 SMOKE_TEST="${SMOKE_TEST:-1}"
 SMOKE_STEPS="${SMOKE_STEPS:-10}"
@@ -120,11 +153,16 @@ echo "MASTER_PORT=${MASTER_PORT}"
 echo "RUN_DIR=${RUN_DIR}"
 echo "LOG_FILE=${LOG_FILE}"
 echo "NCCL_SOCKET_IFNAME=${NCCL_SOCKET_IFNAME}"
+echo "GLOO_SOCKET_IFNAME=${GLOO_SOCKET_IFNAME}"
 echo "TORCHELASTIC_USE_AGENT_STORE=${TORCHELASTIC_USE_AGENT_STORE}"
+echo "TORCH_NCCL_ASYNC_ERROR_HANDLING=${TORCH_NCCL_ASYNC_ERROR_HANDLING}"
+echo "NCCL_ASYNC_ERROR_HANDLING=${NCCL_ASYNC_ERROR_HANDLING}"
+echo "NCCL_IB_DISABLE=${NCCL_IB_DISABLE}"
+echo "NCCL_DEBUG=${NCCL_DEBUG}"
+echo "TORCH_DISTRIBUTED_DEBUG=${TORCH_DISTRIBUTED_DEBUG}"
 echo -n "FINAL_CMD="
 printf '%q ' "${FINAL_CMD[@]}"
 echo
 
 NPROC_PER_NODE="${NPROC_PER_NODE}" \
 "${FINAL_CMD[@]}" 2>&1 | tee "${LOG_FILE}"
-

@@ -1,0 +1,32 @@
+Running command:
+python3 repro/sum_paper/run_sum_test_eval.py --checkpoint-choice last --train-file datasets/original/sum_train.jsonl --val-file datasets/original/sum_val.jsonl --test-file datasets/original/sum_test.jsonl --number-of-prompts 10 --temperature 0.9 --top-p 0.9 --max-new-tokens 1024 --batch-size 8 --seed 43 --output-json repro/sum_paper/results/sum_test_eval_20260224-113822/run_summary.json --metrics-json repro/sum_paper/results/sum_test_eval_20260224-113822/metrics.json --pred-path repro/sum_paper/results/sum_test_eval_20260224-113822/predictions.jsonl --sum-run-dir output/sum/sum-qwen-qwen-20260214-104456
+/qiuyeqing/tools/miniconda3/envs/prl_clean/lib/python3.10/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+[INFO:swift] Successfully registered `/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/swift/llm/dataset/data/dataset_info.json`.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536/checkpoint-1700
+[INFO:swift] Successfully loaded /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536/checkpoint-1700/args.json.
+[INFO:swift] rank: -1, local_rank: -1, world_size: 1, local_world_size: 1
+[INFO:swift.hub.hub] Downloading the model from ModelScope Hub, model_id: Qwen/Qwen2.5-7B-Instruct
+[INFO:modelscope] Target directory already exists, skipping creation.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+[INFO:swift] args.result_path: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536/checkpoint-1700/infer_result/20260224-113843.jsonl
+[INFO:swift] Setting args.eval_human: True
+[INFO:swift.hub.hub] Downloading the model from ModelScope Hub, model_id: Qwen/Qwen2.5-7B-Instruct
+[INFO:modelscope] Target directory already exists, skipping creation.
+[INFO:swift] Loading the model using model_dir: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/.cache/modelscope/models/Qwen/Qwen2___5-7B-Instruct
+`torch_dtype` is deprecated! Use `dtype` instead!
+[INFO:swift] model_kwargs: {'device_map': 'cuda:0'}
+`torch_dtype` is deprecated! Use `dtype` instead!
+Downloading Model from https://www.modelscope.cn to directory: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/.cache/modelscope/models/Qwen/Qwen2.5-7B-Instruct
+Downloading Model from https://www.modelscope.cn to directory: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/.cache/modelscope/models/Qwen/Qwen2.5-7B-Instruct
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:13,  4.52s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:08<00:08,  4.20s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:12<00:04,  4.21s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:16<00:00,  3.99s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:16<00:00,  4.09s/it]
+[INFO:swift] default_system: A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant first thinks about the reasoning process in the mind and then provides the user with the answer. The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think><answer> answer here </answer>
+=== SUM Test Eval Summary ===
+checkpoint: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536/checkpoint-1700
+resolved_sum_run_version_dir: /qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536
+best_prompt_index: 2
+best_val_rouge_avg: 32.6490
+test_rouge1/2/L/avg: 41.7276/14.5958/36.8556/31.0597
+predictions_jsonl: repro/sum_paper/results/sum_test_eval_20260224-113822/predictions.jsonl
+metrics_json: repro/sum_paper/results/sum_test_eval_20260224-113822/metrics.json
+run_summary_json: repro/sum_paper/results/sum_test_eval_20260224-113822/run_summary.json

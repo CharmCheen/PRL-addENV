@@ -31,8 +31,49 @@ export REASONING=${REASONING:-True}
 
 # GPU configuration
 PRL_CUDA_VISIBLE_DEVICES=${PRL_CUDA_VISIBLE_DEVICES:-0,1,2,3}
-PRL_NPROC_PER_NODE=${PRL_NPROC_PER_NODE:-4}
-PRL_MASTER_PORT=${PRL_MASTER_PORT:-29500}
+
+count_visible_gpus() {
+  local src="${PRL_CUDA_VISIBLE_DEVICES:-${CUDA_VISIBLE_DEVICES:-}}"
+  if [[ -n "${src}" ]]; then
+    local cleaned
+    cleaned="$(echo "${src}" | tr -d ' ')"
+    if [[ -n "${cleaned}" ]]; then
+      awk -F',' '{print NF}' <<<"${cleaned}"
+      return
+    fi
+  fi
+  if command -v nvidia-smi >/dev/null 2>&1; then
+    local n
+    n="$(nvidia-smi -L 2>/dev/null | grep -c '^GPU' || true)"
+    if [[ "${n}" -gt 0 ]]; then
+      echo "${n}"
+      return
+    fi
+  fi
+  echo "1"
+}
+
+choose_master_port() {
+  python - <<'PY'
+import socket
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(('', 0))
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print(s.getsockname()[1])
+PY
+}
+
+VISIBLE_GPUS="$(count_visible_gpus)"
+PRL_NPROC_PER_NODE=${PRL_NPROC_PER_NODE:-${VISIBLE_GPUS}}
+if ! [[ "${PRL_NPROC_PER_NODE}" =~ ^[0-9]+$ ]] || [[ "${PRL_NPROC_PER_NODE}" -lt 1 ]]; then
+  echo "[ERROR] PRL_NPROC_PER_NODE must be positive integer, got '${PRL_NPROC_PER_NODE}'"
+  exit 1
+fi
+if [[ "${PRL_NPROC_PER_NODE}" -gt "${VISIBLE_GPUS}" ]]; then
+  echo "[WARN] PRL_NPROC_PER_NODE=${PRL_NPROC_PER_NODE} > visible_gpus=${VISIBLE_GPUS}; auto-downgrade."
+  PRL_NPROC_PER_NODE="${VISIBLE_GPUS}"
+fi
+PRL_MASTER_PORT=${PRL_MASTER_PORT:-$(choose_master_port)}
 
 # Training batch configuration
 PRL_PER_DEVICE_TRAIN_BATCH_SIZE=${PRL_PER_DEVICE_TRAIN_BATCH_SIZE:-4}
@@ -50,6 +91,17 @@ PRL_VLLM_GPU_MEMORY_UTILIZATION=${PRL_VLLM_GPU_MEMORY_UTILIZATION:-0.40}
 # if your platform supports it.
 PRL_DATALOADER_NUM_WORKERS=${PRL_DATALOADER_NUM_WORKERS:-0}
 PRL_DATASET_NUM_PROC=${PRL_DATASET_NUM_PROC:-8}
+if ! [[ "${PRL_DATALOADER_NUM_WORKERS}" =~ ^[0-9]+$ ]]; then
+  echo "[ERROR] PRL_DATALOADER_NUM_WORKERS must be non-negative integer, got '${PRL_DATALOADER_NUM_WORKERS}'"
+  exit 1
+fi
+if df -k /dev/shm >/dev/null 2>&1; then
+  SHM_KB="$(df -k /dev/shm | awk 'NR==2 {print $2}')"
+  if [[ -n "${SHM_KB}" ]] && [[ "${SHM_KB}" -lt 8388608 ]] && [[ "${PRL_DATALOADER_NUM_WORKERS}" -gt 2 ]]; then
+    echo "[WARN] /dev/shm < 8GB; cap PRL_DATALOADER_NUM_WORKERS to 2 (was ${PRL_DATALOADER_NUM_WORKERS})."
+    PRL_DATALOADER_NUM_WORKERS=2
+  fi
+fi
 
 # Model configuration
 PRL_MAX_COMPLETION_LENGTH=${PRL_MAX_COMPLETION_LENGTH:-768}

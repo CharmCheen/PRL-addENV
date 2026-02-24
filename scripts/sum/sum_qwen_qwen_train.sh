@@ -19,9 +19,50 @@ export NUMBER_OF_PROMPTS="${NUMBER_OF_PROMPTS:-3}"
 export ADVERSARIAL="${ADVERSARIAL:-0}"
 export REASONING="${REASONING:-True}"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
-export NPROC_PER_NODE="${NPROC_PER_NODE:-4}"
+
+count_visible_gpus() {
+  if [[ -n "${CUDA_VISIBLE_DEVICES:-}" ]]; then
+    local cleaned
+    cleaned="$(echo "${CUDA_VISIBLE_DEVICES}" | tr -d ' ')"
+    if [[ -n "${cleaned}" ]]; then
+      awk -F',' '{print NF}' <<<"${cleaned}"
+      return
+    fi
+  fi
+  if command -v nvidia-smi >/dev/null 2>&1; then
+    local n
+    n="$(nvidia-smi -L 2>/dev/null | grep -c '^GPU' || true)"
+    if [[ "${n}" -gt 0 ]]; then
+      echo "${n}"
+      return
+    fi
+  fi
+  echo "1"
+}
+
+choose_master_port() {
+  python - <<'PY'
+import socket
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(('', 0))
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print(s.getsockname()[1])
+PY
+}
+
+VISIBLE_GPUS="$(count_visible_gpus)"
+if [[ -z "${NPROC_PER_NODE:-}" ]]; then
+  NPROC_PER_NODE="${VISIBLE_GPUS}"
+elif ! [[ "${NPROC_PER_NODE}" =~ ^[0-9]+$ ]] || [[ "${NPROC_PER_NODE}" -lt 1 ]]; then
+  echo "[ERROR] NPROC_PER_NODE must be positive integer, got '${NPROC_PER_NODE}'"
+  exit 1
+elif [[ "${NPROC_PER_NODE}" -gt "${VISIBLE_GPUS}" ]]; then
+  echo "[WARN] NPROC_PER_NODE=${NPROC_PER_NODE} > visible_gpus=${VISIBLE_GPUS}; auto-downgrade."
+  NPROC_PER_NODE="${VISIBLE_GPUS}"
+fi
+export NPROC_PER_NODE
 export MASTER_ADDR="127.0.0.1"
-export MASTER_PORT="${MASTER_PORT:-29501}"
+export MASTER_PORT="${MASTER_PORT:-$(choose_master_port)}"
 export TORCHELASTIC_USE_AGENT_STORE=0
 export NCCL_ASYNC_ERROR_HANDLING=1
 export NCCL_DEBUG="${NCCL_DEBUG:-WARN}"
@@ -54,6 +95,19 @@ else
   USE_LMDEPLOY_ARG="false"
 fi
 
+DATALOADER_NUM_WORKERS="${DATALOADER_NUM_WORKERS:-1}"
+if ! [[ "${DATALOADER_NUM_WORKERS}" =~ ^[0-9]+$ ]]; then
+  echo "[ERROR] DATALOADER_NUM_WORKERS must be non-negative integer, got '${DATALOADER_NUM_WORKERS}'"
+  exit 1
+fi
+if df -k /dev/shm >/dev/null 2>&1; then
+  SHM_KB="$(df -k /dev/shm | awk 'NR==2 {print $2}')"
+  if [[ -n "${SHM_KB}" ]] && [[ "${SHM_KB}" -lt 8388608 ]] && [[ "${DATALOADER_NUM_WORKERS}" -gt 2 ]]; then
+    echo "[WARN] /dev/shm < 8GB; cap DATALOADER_NUM_WORKERS to 2 (was ${DATALOADER_NUM_WORKERS})."
+    DATALOADER_NUM_WORKERS=2
+  fi
+fi
+
 FINAL_CMD=(
   "${SWIFT_CMD[@]}" rlhf
   --rlhf_type grpo
@@ -81,7 +135,7 @@ FINAL_CMD=(
   --max_length 2048
   --output_dir "${RUN_DIR}"
   --warmup_ratio 0
-  --dataloader_num_workers 1
+  --dataloader_num_workers "${DATALOADER_NUM_WORKERS}"
   --dataset_num_proc 4
   --num_generations 4
   --temperature 0.9

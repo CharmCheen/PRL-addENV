@@ -46,9 +46,50 @@ export REASONING=True
 # ============================================================================
 # Multi-GPU Configuration (与原运行完全一致: 6卡, 3进程)
 # ============================================================================
-PRL_CUDA_VISIBLE_DEVICES=0,1,2,3,4,5
-PRL_NPROC_PER_NODE=3
-PRL_MASTER_PORT=29500
+PRL_CUDA_VISIBLE_DEVICES=${PRL_CUDA_VISIBLE_DEVICES:-0,1,2,3,4,5}
+
+count_visible_gpus() {
+    local src="${PRL_CUDA_VISIBLE_DEVICES:-${CUDA_VISIBLE_DEVICES:-}}"
+    if [[ -n "${src}" ]]; then
+        local cleaned
+        cleaned="$(echo "${src}" | tr -d ' ')"
+        if [[ -n "${cleaned}" ]]; then
+            awk -F',' '{print NF}' <<<"${cleaned}"
+            return
+        fi
+    fi
+    if command -v nvidia-smi >/dev/null 2>&1; then
+        local n
+        n="$(nvidia-smi -L 2>/dev/null | grep -c '^GPU' || true)"
+        if [[ "${n}" -gt 0 ]]; then
+            echo "${n}"
+            return
+        fi
+    fi
+    echo "1"
+}
+
+choose_master_port() {
+    python - <<'PY'
+import socket
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(('', 0))
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print(s.getsockname()[1])
+PY
+}
+
+VISIBLE_GPUS="$(count_visible_gpus)"
+PRL_NPROC_PER_NODE=${PRL_NPROC_PER_NODE:-${VISIBLE_GPUS}}
+if ! [[ "${PRL_NPROC_PER_NODE}" =~ ^[0-9]+$ ]] || [[ "${PRL_NPROC_PER_NODE}" -lt 1 ]]; then
+    echo "[ERROR] PRL_NPROC_PER_NODE must be positive integer, got '${PRL_NPROC_PER_NODE}'"
+    exit 1
+fi
+if [[ "${PRL_NPROC_PER_NODE}" -gt "${VISIBLE_GPUS}" ]]; then
+    echo "[WARN] PRL_NPROC_PER_NODE=${PRL_NPROC_PER_NODE} > visible_gpus=${VISIBLE_GPUS}; auto-downgrade."
+    PRL_NPROC_PER_NODE="${VISIBLE_GPUS}"
+fi
+PRL_MASTER_PORT=${PRL_MASTER_PORT:-$(choose_master_port)}
 
 # Training batch configuration
 PRL_PER_DEVICE_TRAIN_BATCH_SIZE=4

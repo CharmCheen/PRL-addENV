@@ -1,0 +1,52 @@
+{
+  "task": "sum",
+  "n_runs": 3,
+  "runs": [
+    {
+      "seed": 42,
+      "rouge1": 43.50330097901873,
+      "rouge2": 16.62423810085909,
+      "rougeL": 38.10631002447813,
+      "rouge_avg": 32.74461636811865,
+      "json_path": "repro/sum_paper/results/sum_test_eval_20260224-112118/run_summary.json"
+    },
+    {
+      "seed": 43,
+      "rouge1": 41.72764554642366,
+      "rouge2": 14.595824448781194,
+      "rougeL": 36.85557475386227,
+      "rouge_avg": 31.05968158302237,
+      "json_path": "repro/sum_paper/results/sum_test_eval_20260224-113822/run_summary.json"
+    },
+    {
+      "seed": 44,
+      "rouge1": 42.083614148069,
+      "rouge2": 15.324036937507021,
+      "rougeL": 37.13200672055043,
+      "rouge_avg": 31.51321926870882,
+      "json_path": "repro/sum_paper/results/sum_test_eval_20260224-115548/run_summary.json"
+    }
+  ],
+  "mean": {
+    "rouge1": 42.43818689117047,
+    "rouge2": 15.514699829049102,
+    "rougeL": 37.36463049963027,
+    "rouge_avg": 31.772505739949946
+  },
+  "std": {
+    "rouge1": 0.7670416878888093,
+    "rouge2": 0.8389993006124957,
+    "rougeL": 0.5364513312722609,
+    "rouge_avg": 0.711886420310322
+  },
+  "paper_value": {
+    "rouge1": 42.47,
+    "rouge2": 16.17,
+    "rougeL": 37.73
+  },
+  "delta": {
+    "rouge1": -0.0318131088295317,
+    "rouge2": -0.6553001709509001,
+    "rougeL": -0.3653695003697237
+  }
+}

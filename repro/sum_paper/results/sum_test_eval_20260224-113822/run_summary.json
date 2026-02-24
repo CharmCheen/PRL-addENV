@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "timestamp_utc": "2026-02-24T11:55:44.724398+00:00",
+    "git_commit": "107d0f69da9836e177d616573b08d5307ffa9604",
+    "task": "sum",
+    "metric": "rouge1/rouge2/rougeL_f1",
+    "checkpoint": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536/checkpoint-1700",
+    "checkpoint_choice": "last",
+    "resolved_from_sum_run": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "model_type": "qwen2_5",
+    "train_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/sum_train.jsonl",
+    "val_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/sum_val.jsonl",
+    "test_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/sum_test.jsonl",
+    "number_of_prompts": 10,
+    "fixed_prompt": "",
+    "temperature": 0.9,
+    "top_p": 0.9,
+    "max_new_tokens": 1024,
+    "batch_size": 8,
+    "seed": 43,
+    "limit": null,
+    "n_val": 100,
+    "n_test": 819
+  },
+  "selection": {
+    "best_prompt_index": 2,
+    "best_prompt": "When rephrasing a given text into a concise summary, focus on capturing the core message and key points while omitting unnecessary details. Aim for clarity and brevity, ideally under 50 words. Ensure the summary retains the essential information and tone of the original text.",
+    "best_val_rouge_avg": 32.649005442927276,
+    "per_prompt": [
+      {
+        "prompt_index": 0,
+        "prompt": "When rephrasing text into a summary, generate a concise version that captures the essential information and main ideas. Aim for a brief summary, typically no longer than 50-100 words, depending on the original text's complexity. Ensure the summary includes key points and maintains the original tone if appropriate. Provide any relevant context or purpose for the summary, such as summarizing a research paper for a general audience or condensing a lengthy policy document for quick reference.",
+        "rouge1": 37.71355900547446,
+        "rouge2": 13.87459531198825,
+        "rougeL": 34.04167078026433,
+        "rouge_avg": 28.54327503257568
+      },
+      {
+        "prompt_index": 1,
+        "prompt": "When rephrasing a text into a summary, aim to capture the core message and main points in a concise manner. Ensure the summary is accurate and includes only essential information, omitting any extraneous details. Aim for a brief yet comprehensive representation that retains the essence of the original content.",
+        "rouge1": 38.812468532740425,
+        "rouge2": 15.111190684948214,
+        "rougeL": 34.650712709765806,
+        "rouge_avg": 29.524790642484817
+      },
+      {
+        "prompt_index": 2,
+        "prompt": "When rephrasing a given text into a concise summary, focus on capturing the core message and key points while omitting unnecessary details. Aim for clarity and brevity, ideally under 50 words. Ensure the summary retains the essential information and tone of the original text.",
+        "rouge1": 42.30423136595444,
+        "rouge2": 17.52511897125797,
+        "rougeL": 38.11766599156941,
+        "rouge_avg": 32.649005442927276
+      },
+      {
+        "prompt_index": 3,
+        "prompt": "How would you condense the given text into a concise, clear, and coherent summary of no more than 50 words, focusing on the main ideas and removing any unnecessary details?",
+        "rouge1": 41.61565314479587,
+        "rouge2": 15.58964612952329,
+        "rougeL": 36.51751215109655,
+        "rouge_avg": 31.240937141805233
+      },
+      {
+        "prompt_index": 4,
+        "prompt": "When rephrasing a text in a few words, focus on distilling the main ideas and key points into a concise summary. Aim to capture the essence of the content without including unnecessary details. Use clear and straightforward language, and consider structuring your summary with bullet points or short sentences for clarity.",
+        "rouge1": 39.40004187769829,
+        "rouge2": 14.735197188741134,
+        "rougeL": 37.535898463772185,
+        "rouge_avg": 30.55704584340387
+      },
+      {
+        "prompt_index": 5,
+        "prompt": "When rephrasing a text into a few words, focus on capturing the main idea or key points while maintaining clarity and coherence. Ensure that the summary retains the core message without losing important details. Aim for conciseness and precision in your rephrasing.",
+        "rouge1": 39.14332224415432,
+        "rouge2": 14.304117545637238,
+        "rougeL": 35.709162609186436,
+        "rouge_avg": 29.718867466326
+      },
+      {
+        "prompt_index": 6,
+        "prompt": "When rephrasing a text into a few words, focus on capturing the key points and maintaining the essential context. Ensure the summary is concise yet informative, omitting unnecessary details. Aim to convey the main idea succinctly.",
+        "rouge1": 41.8517334390334,
+        "rouge2": 16.847953822102447,
+        "rougeL": 37.321173971577366,
+        "rouge_avg": 32.00695374423774
+      },
+      {
+        "prompt_index": 7,
+        "prompt": "When rephrasing a text in a few words, create a concise summary that captures the main idea or key points. Ensure the essence of the original message is maintained while making it as brief as possible. Focus on retaining the core information and omitting any unnecessary details.",
+        "rouge1": 42.69465561682031,
+        "rouge2": 16.990731035872734,
+        "rougeL": 37.85107180992801,
+        "rouge_avg": 32.51215282087369
+      },
+      {
+        "prompt_index": 8,
+        "prompt": "When rephrasing a text into a few words, aim to capture the essence of the original content while significantly reducing its length. Focus on retaining the main ideas and key points, and exclude any unnecessary details. Strive for clarity and conciseness, and try to use your own words rather than directly quoting the original text. Aim for a summary of around 10-20 words.",
+        "rouge1": 38.16476153949473,
+        "rouge2": 13.430779326391933,
+        "rougeL": 33.276837220548074,
+        "rouge_avg": 28.290792695478245
+      },
+      {
+        "prompt_index": 9,
+        "prompt": "When rephrasing text into a few words, focus on capturing the core message and essential details while maintaining clarity and coherence. Identify key points, remove unnecessary information, and present a concise summary that accurately represents the original content. Aim for brevity without sacrificing important information.",
+        "rouge1": 40.455251267589205,
+        "rouge2": 14.993894001617825,
+        "rougeL": 35.90073188243434,
+        "rouge_avg": 30.449959050547125
+      }
+    ]
+  },
+  "artifacts": {
+    "predictions_jsonl": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/repro/sum_paper/results/sum_test_eval_20260224-113822/predictions.jsonl",
+    "metrics_json": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/repro/sum_paper/results/sum_test_eval_20260224-113822/metrics.json"
+  },
+  "test_metrics": {
+    "rouge1": 41.72764554642366,
+    "rouge2": 14.595824448781194,
+    "rougeL": 36.85557475386227,
+    "rouge_avg": 31.05968158302237,
+    "metric": "rouge_f1",
+    "num_samples": 819
+  }
+}

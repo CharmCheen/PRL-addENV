@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "timestamp_utc": "2026-02-24T12:13:25.293259+00:00",
+    "git_commit": "107d0f69da9836e177d616573b08d5307ffa9604",
+    "task": "sum",
+    "metric": "rouge1/rouge2/rougeL_f1",
+    "checkpoint": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536/checkpoint-1700",
+    "checkpoint_choice": "last",
+    "resolved_from_sum_run": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum/sum-qwen-qwen-20260214-104456/v0-20260214-104536",
+    "base_model": "Qwen/Qwen2.5-7B-Instruct",
+    "model_type": "qwen2_5",
+    "train_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/sum_train.jsonl",
+    "val_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/sum_val.jsonl",
+    "test_file": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/datasets/original/sum_test.jsonl",
+    "number_of_prompts": 10,
+    "fixed_prompt": "",
+    "temperature": 0.9,
+    "top_p": 0.9,
+    "max_new_tokens": 1024,
+    "batch_size": 8,
+    "seed": 44,
+    "limit": null,
+    "n_val": 100,
+    "n_test": 819
+  },
+  "selection": {
+    "best_prompt_index": 6,
+    "best_prompt": "When rephrasing a text into a few words, aim to capture its main idea concisely. Provide a brief summary that retains the core message while omitting unnecessary details. Focus on key points and use your own words to ensure clarity and brevity.",
+    "best_val_rouge_avg": 32.46337948101419,
+    "per_prompt": [
+      {
+        "prompt_index": 0,
+        "prompt": "How would you concisely summarize the main points of the following [specific type of content, e.g., article, report] in approximately 50-100 words, maintaining the key information and tone of the original text?",
+        "rouge1": 36.10018775971096,
+        "rouge2": 12.64909565509804,
+        "rougeL": 32.27486559046289,
+        "rouge_avg": 27.00804966842396
+      },
+      {
+        "prompt_index": 1,
+        "prompt": "How would you condense the given text into a concise summary, focusing on the main ideas and key details, while limiting the summary to no more than 50 words? Ensure the summary captures the essence of the original content without losing important information. Use a straightforward tone and maintain the original meaning as closely as possible.",
+        "rouge1": 41.62137516447496,
+        "rouge2": 14.989238706597915,
+        "rougeL": 36.45888010306181,
+        "rouge_avg": 31.023164658044895
+      },
+      {
+        "prompt_index": 2,
+        "prompt": "When rephrasing a text into a few words, focus on capturing the main ideas and key points while omitting unnecessary details. Ensure the summary retains the core message and is concise and clear. Aim for a balance between brevity and comprehensiveness, making the summary easily understandable to the reader.",
+        "rouge1": 41.054162901326634,
+        "rouge2": 16.110178453900584,
+        "rougeL": 36.6512313613532,
+        "rouge_avg": 31.271857572193472
+      },
+      {
+        "prompt_index": 3,
+        "prompt": "How would you condense the main ideas into a concise summary of no more than 20 words, capturing the essence while removing any unnecessary details?",
+        "rouge1": 38.691422890751575,
+        "rouge2": 13.96080554079189,
+        "rougeL": 33.50145600030978,
+        "rouge_avg": 28.717894810617747
+      },
+      {
+        "prompt_index": 4,
+        "prompt": "When rephrasing a given text in a few words, focus on extracting the key points and essential information. Aim to create a concise summary that retains the core meaning while omitting unnecessary details. Use your own words and structure the summary logically. For example, if the original text is about the benefits of regular exercise, your summary might include something like: \"Regular exercise improves health, increases energy, and reduces stress.\" Pay attention to clarity and brevity.",
+        "rouge1": 41.3706559087166,
+        "rouge2": 16.58244064468693,
+        "rougeL": 37.38955270803911,
+        "rouge_avg": 31.780883087147544
+      },
+      {
+        "prompt_index": 5,
+        "prompt": "When rephrasing text into a few words, your goal is to create a concise summary that retains the essential information and key points. Ensure the summary is no longer than 50 words and captures the main idea or purpose of the original text. Use clear and direct language, and avoid unnecessary details. Focus on conveying the core message effectively while maintaining readability.",
+        "rouge1": 41.22393595155357,
+        "rouge2": 16.06219941371814,
+        "rougeL": 36.952197748678735,
+        "rouge_avg": 31.41277770465015
+      },
+      {
+        "prompt_index": 6,
+        "prompt": "When rephrasing a text into a few words, aim to capture its main idea concisely. Provide a brief summary that retains the core message while omitting unnecessary details. Focus on key points and use your own words to ensure clarity and brevity.",
+        "rouge1": 42.25500394776746,
+        "rouge2": 17.63447135760326,
+        "rougeL": 37.500663137671836,
+        "rouge_avg": 32.46337948101419
+      },
+      {
+        "prompt_index": 7,
+        "prompt": "When rephrasing a text into a few words, your goal is to create a concise summary that retains the essential information and meaning of the original. Aim to capture the main points using the minimum number of words possible.",
+        "rouge1": 39.129412978997394,
+        "rouge2": 14.692319072383459,
+        "rougeL": 36.15524661805896,
+        "rouge_avg": 29.992326223146602
+      },
+      {
+        "prompt_index": 8,
+        "prompt": "When rephrasing a given text into a few words, follow these guidelines:\n\n1. **Target Length**: Aim for a concise summary that captures the essence of the text within 5-7 words.\n2. **Key Elements**: Focus on identifying and including the main points and relevant context of the text.\n3. **Style and Tone**: Maintain a clear and concise tone that accurately represents the original text.\n4. **Format**: Ensure the summary is coherent and easily understandable.\n\nFor example, if given the sentence \"The new policy will significantly impact the daily operations of all departments,\" a refined summary could be \"New policy impacts all departments.\"\n\nBy following these guidelines, you can create more effective and informative summaries.",
+        "rouge1": 29.8470010506289,
+        "rouge2": 9.559593531365739,
+        "rougeL": 26.99642203857237,
+        "rouge_avg": 22.134338873522335
+      },
+      {
+        "prompt_index": 9,
+        "prompt": "When rephrasing a text into a brief summary, aim to capture the main ideas and essential details concisely. Ensure your summary is clear and easy to understand while omitting unnecessary information. Strive for a balance between brevity and comprehensiveness.\n\nExample 1:\nOriginal: The company has been facing financial difficulties due to declining sales and increased competition.\nSummary: Declining sales and increased competition have led to financial challenges for the company.\n\nExample 2:\nOriginal: In this study, researchers examined the long-term effects of climate change on coastal ecosystems and found that sea levels are rising at an accelerated rate.\nSummary: This study reveals that rising sea levels at an accelerated rate are among the long-term effects of climate change on coastal ecosystems.\n\nUse these examples as a reference to create your summary.",
+        "rouge1": 40.53157298155449,
+        "rouge2": 16.329266019082073,
+        "rougeL": 36.03899806087896,
+        "rouge_avg": 30.966612353838503
+      }
+    ]
+  },
+  "artifacts": {
+    "predictions_jsonl": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/repro/sum_paper/results/sum_test_eval_20260224-115548/predictions.jsonl",
+    "metrics_json": "/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/repro/sum_paper/results/sum_test_eval_20260224-115548/metrics.json"
+  },
+  "test_metrics": {
+    "rouge1": 42.083614148069,
+    "rouge2": 15.324036937507021,
+    "rougeL": 37.13200672055043,
+    "rouge_avg": 31.51321926870882,
+    "metric": "rouge_f1",
+    "num_samples": 819
+  }
+}

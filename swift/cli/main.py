@@ -1,6 +1,7 @@
 # Copyright (c) Alibaba, Inc. and its affiliates.
 import importlib.util
 import os
+import socket
 import subprocess
 import sys
 from typing import Dict, List, Optional
@@ -34,9 +35,61 @@ def use_torchrun() -> bool:
     return True
 
 
+def _count_visible_gpus() -> int:
+    cvis = os.getenv('CUDA_VISIBLE_DEVICES')
+    if cvis is not None:
+        cleaned = cvis.replace(' ', '')
+        if cleaned:
+            parts = [p for p in cleaned.split(',') if p != '']
+            if parts:
+                return len(parts)
+    try:
+        out = subprocess.check_output(['nvidia-smi', '-L'], text=True, stderr=subprocess.DEVNULL)
+        lines = [line for line in out.splitlines() if line.strip()]
+        if lines:
+            return len(lines)
+    except Exception:
+        pass
+    return 1
+
+
+def _pick_free_port() -> str:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.bind(('', 0))
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        return str(sock.getsockname()[1])
+
+
+def _normalize_ddp_env() -> None:
+    visible_gpus = max(_count_visible_gpus(), 1)
+    env_nproc = os.getenv('NPROC_PER_NODE')
+    if env_nproc is None or env_nproc.strip() == '':
+        os.environ['NPROC_PER_NODE'] = str(visible_gpus)
+    else:
+        try:
+            nproc = int(env_nproc)
+        except ValueError:
+            logger.warning(f'Invalid NPROC_PER_NODE={env_nproc!r}; fallback to {visible_gpus}')
+            nproc = visible_gpus
+        if nproc < 1:
+            logger.warning(f'NPROC_PER_NODE must be >=1; fallback to {visible_gpus}')
+            nproc = visible_gpus
+        if nproc > visible_gpus:
+            logger.warning(
+                f'NPROC_PER_NODE={nproc} exceeds visible GPUs ({visible_gpus}); '
+                f'auto-downgrade to {visible_gpus}'
+            )
+            nproc = visible_gpus
+        os.environ['NPROC_PER_NODE'] = str(nproc)
+
+    if os.getenv('MASTER_PORT') is None:
+        os.environ['MASTER_PORT'] = _pick_free_port()
+
+
 def get_torchrun_args() -> Optional[List[str]]:
     if not use_torchrun():
         return
+    _normalize_ddp_env()
     torchrun_args = []
     for env_key in ['NPROC_PER_NODE', 'MASTER_PORT', 'NNODES', 'NODE_RANK', 'MASTER_ADDR']:
         env_val = os.getenv(env_key)

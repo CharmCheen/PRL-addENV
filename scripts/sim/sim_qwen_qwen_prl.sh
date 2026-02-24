@@ -28,30 +28,35 @@ count_visible_gpus() {
     # CUDA_VISIBLE_DEVICES=0,1,2 -> 3
     local cleaned
     cleaned="$(echo "${CUDA_VISIBLE_DEVICES}" | tr -d ' ')"
-    if [[ -z "${cleaned}" ]]; then
-      echo "1"
+    if [[ -n "${cleaned}" ]]; then
+      awk -F',' '{print NF}' <<<"${cleaned}"
       return
     fi
-    awk -F',' '{print NF}' <<<"${cleaned}"
-    return
   fi
 
-  # Fallback to torch device count; if unavailable return 1.
-  python - <<'PY'
-try:
-    import torch
-    n = int(torch.cuda.device_count())
-    print(n if n > 0 else 1)
-except Exception:
-    print(1)
-PY
+  if command -v nvidia-smi >/dev/null 2>&1; then
+    local n
+    n="$(nvidia-smi -L 2>/dev/null | grep -c '^GPU' || true)"
+    if [[ "${n}" -gt 0 ]]; then
+      echo "${n}"
+      return
+    fi
+  fi
+  echo "1"
 }
 
 if [[ -z "${NPROC_PER_NODE:-}" ]]; then
   NPROC_PER_NODE="$(count_visible_gpus)"
 fi
 if [[ -z "${MASTER_PORT:-}" ]]; then
-  MASTER_PORT="29500"
+  MASTER_PORT="$(python - <<'PY'
+import socket
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(('', 0))
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    print(s.getsockname()[1])
+PY
+)"
 fi
 
 if ! [[ "${NPROC_PER_NODE}" =~ ^[0-9]+$ ]]; then
@@ -61,6 +66,11 @@ fi
 if [[ "${NPROC_PER_NODE}" -lt 1 ]]; then
   echo "[ERROR] NPROC_PER_NODE must be >= 1, got '${NPROC_PER_NODE}'"
   exit 1
+fi
+VISIBLE_GPUS="$(count_visible_gpus)"
+if [[ "${NPROC_PER_NODE}" -gt "${VISIBLE_GPUS}" ]]; then
+  echo "[WARN] NPROC_PER_NODE=${NPROC_PER_NODE} > visible_gpus=${VISIBLE_GPUS}; auto-downgrade."
+  NPROC_PER_NODE="${VISIBLE_GPUS}"
 fi
 
 # Candidate upstream entry wrappers in this repo.
@@ -184,4 +194,3 @@ echo "[INFO] FINAL_CMD=${FINAL_CMD}"
 
 # Keep full launcher output in RUN_DIR/sim.log
 bash -lc "${FINAL_CMD}" 2>&1 | tee "${LOG_FILE}"
-

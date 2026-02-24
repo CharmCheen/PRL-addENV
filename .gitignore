@@ -43,6 +43,9 @@ repro/mr_paper/results/**/*.json
 repro/mr_paper/results/*.log
 repro/mr_paper/results/*.json
 
+# SUM repro large prediction artifacts
+repro/sum_paper/results/**/predictions.jsonl
+
 # Local audit/reference PDFs
 docs/base_ref.pdf
 docs/idea初版.pdf

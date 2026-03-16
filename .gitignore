@@ -1,7 +1,13 @@
 # Output and checkpoints
 output/
+logs/
 logs_*.log
 logs/**/*.log
+checkpoints/
+*.pt
+*.pth
+*.bin
+*.safetensors
 
 # Wandb
 wandb/

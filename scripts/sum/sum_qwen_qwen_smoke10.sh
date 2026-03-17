@@ -28,8 +28,9 @@ export NUMBER_OF_SAMPLES="${NUMBER_OF_SAMPLES:-10}"
 export NUMBER_OF_PROMPTS="${NUMBER_OF_PROMPTS:-3}"
 export ADVERSARIAL="${ADVERSARIAL:-0}"
 export REASONING="${REASONING:-True}"
-
-BASE_OUTPUT_DIR="/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sum"
+# USE_HUMAN_LABELS=1 means the reward signal aligns with human gold labels (ADVERSARIAL=0).
+# USE_HUMAN_LABELS=0 means adversarial mode where rewards oppose the gold labels (ADVERSARIAL=1).
+export USE_HUMAN_LABELS=$([ "${ADVERSARIAL}" = "0" ] && echo 1 || echo 0)
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 RUN_DIR="${BASE_OUTPUT_DIR}/sum-qwen-qwen-${TIMESTAMP}"
 LOG_FILE="${RUN_DIR}/sum.log"
@@ -159,6 +160,7 @@ echo "MASTER_PORT=${MASTER_PORT}"
 echo "NCCL_SOCKET_IFNAME=${NCCL_SOCKET_IFNAME}"
 echo "TORCHELASTIC_USE_AGENT_STORE=${TORCHELASTIC_USE_AGENT_STORE}"
 echo "USE_LMDEPLOY=${USE_LMDEPLOY_ARG}"
+echo "ADVERSARIAL=${ADVERSARIAL} USE_HUMAN_LABELS=${USE_HUMAN_LABELS}"
 echo -n "FINAL_CMD="
 printf '%q ' "${FINAL_CMD[@]}"
 echo

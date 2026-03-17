@@ -3,6 +3,10 @@ export NUMBER_OF_SAMPLES=100
 export NUMBER_OF_PROMPTS=10
 export ADVERSARIAL=0
 export REASONING=True
+# USE_HUMAN_LABELS=1 means the reward signal aligns with human gold labels (ADVERSARIAL=0).
+# USE_HUMAN_LABELS=0 means adversarial mode where rewards oppose the gold labels (ADVERSARIAL=1).
+export USE_HUMAN_LABELS=$([ "${ADVERSARIAL}" = "0" ] && echo 1 || echo 0)
+echo "[INFO] DATASET=${DATASET} ADVERSARIAL=${ADVERSARIAL} USE_HUMAN_LABELS=${USE_HUMAN_LABELS}"
 
 # Single GPU setup - use direct python call instead of torch.distributed.run
 # Lower vLLM GPU memory utilization to avoid OOM (training model + vLLM on same GPU)

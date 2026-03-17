@@ -494,17 +494,16 @@ class GridAccuracy(ORM):
         self.request_config = request_config
         self.train_data = train_data
 
-        # Freeze the model's parameters so that no gradients will flow
-        # self.frozen_model.eval()
-        # for p in self.frozen_model.parameters():
-        #     p.requires_grad = False
-
-
-        # self.frozen_engine = PtEngine.from_model_template(
-        #     self.frozen_model,
-        #     self.template,
-        #     max_batch_size=1,  # or larger if you need
-        # )
+        # Log the annotation mode so users can confirm whether human-labeled data is active.
+        # USE_HUMAN_LABELS=1 (derived from ADVERSARIAL=0) means rewards align with human gold labels.
+        # USE_HUMAN_LABELS=0 (derived from ADVERSARIAL=1) means adversarial mode.
+        use_human_labels = os.environ.get('USE_HUMAN_LABELS', '1')
+        adversarial = os.environ.get('ADVERSARIAL', '0')
+        annotation_mode = 'human_labeled' if use_human_labels == '1' else 'adversarial'
+        print(
+            f'[GridAccuracy] DATA_ANNOTATION_MODE={annotation_mode} '
+            f'(USE_HUMAN_LABELS={use_human_labels}, ADVERSARIAL={adversarial})'
+        )
 
     def __call__(self, completions: List[str], solution: List[str] = None, **kwargs) -> List[float]:
         """

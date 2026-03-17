@@ -18,6 +18,9 @@ export NUMBER_OF_SAMPLES="${NUMBER_OF_SAMPLES:-10}"
 export NUMBER_OF_PROMPTS="${NUMBER_OF_PROMPTS:-3}"
 export ADVERSARIAL="${ADVERSARIAL:-0}"
 export REASONING="${REASONING:-True}"
+# USE_HUMAN_LABELS=1 means the reward signal aligns with human gold labels (ADVERSARIAL=0).
+# USE_HUMAN_LABELS=0 means adversarial mode where rewards oppose the gold labels (ADVERSARIAL=1).
+export USE_HUMAN_LABELS=$([ "${ADVERSARIAL}" = "0" ] && echo 1 || echo 0)
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1,2,3}"
 
 count_visible_gpus() {
@@ -149,6 +152,7 @@ FINAL_CMD=(
 
 echo "RUN_DIR=${RUN_DIR}"
 echo "LOG_FILE=${LOG_FILE}"
+echo "ADVERSARIAL=${ADVERSARIAL} USE_HUMAN_LABELS=${USE_HUMAN_LABELS}"
 echo -n "FINAL_CMD="
 printf '%q ' "${FINAL_CMD[@]}"
 echo

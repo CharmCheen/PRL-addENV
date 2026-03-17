@@ -172,6 +172,15 @@ class GRPOTrainer(RLHFTrainerMixin, SwiftMixin, HFGRPOTrainer):
         input_file = f"datasets/original/{os.environ['DATASET']}_infer.jsonl"
         with open(input_file, "r") as f:
             self.train_data = [json.loads(line) for line in f if line.strip()]
+
+        use_human_labels = os.environ.get('USE_HUMAN_LABELS', '1')
+        adversarial = os.environ.get('ADVERSARIAL', '0')
+        annotation_mode = 'human_labeled' if use_human_labels == '1' else 'adversarial'
+        logger.info(
+            f'[GRPOTrainer] Loaded {len(self.train_data)} reward-evaluation samples from {input_file}. '
+            f'DATA_ANNOTATION_MODE={annotation_mode} '
+            f'(USE_HUMAN_LABELS={use_human_labels}, ADVERSARIAL={adversarial})'
+        )
         
         ### FOR IDENTICAL PROMPT FOR INFERENCE ###
         input_file = f"datasets/original/{os.environ['DATASET']}_train.jsonl"

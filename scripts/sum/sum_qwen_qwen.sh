@@ -3,6 +3,10 @@ export NUMBER_OF_SAMPLES=10
 export NUMBER_OF_PROMPTS=3
 export ADVERSARIAL=0
 export REASONING=True
+# USE_HUMAN_LABELS=1 means the reward signal aligns with human gold labels (ADVERSARIAL=0).
+# USE_HUMAN_LABELS=0 means adversarial mode where rewards oppose the gold labels (ADVERSARIAL=1).
+export USE_HUMAN_LABELS=$([ "${ADVERSARIAL}" = "0" ] && echo 1 || echo 0)
+echo "[INFO] DATASET=${DATASET} ADVERSARIAL=${ADVERSARIAL} USE_HUMAN_LABELS=${USE_HUMAN_LABELS}"
 
 CUDA_VISIBLE_DEVICES=0,1 \
 NPROC_PER_NODE=1 \

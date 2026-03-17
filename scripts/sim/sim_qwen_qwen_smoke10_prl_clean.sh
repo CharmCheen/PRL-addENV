@@ -27,8 +27,9 @@ export NUMBER_OF_SAMPLES="${NUMBER_OF_SAMPLES:-20}"
 export NUMBER_OF_PROMPTS="${NUMBER_OF_PROMPTS:-5}"
 export ADVERSARIAL="${ADVERSARIAL:-0}"
 export REASONING="${REASONING:-True}"
-
-BASE_OUTPUT_DIR="output/sim"
+# USE_HUMAN_LABELS=1 means the reward signal aligns with human gold labels (ADVERSARIAL=0).
+# USE_HUMAN_LABELS=0 means adversarial mode where rewards oppose the gold labels (ADVERSARIAL=1).
+export USE_HUMAN_LABELS=$([ "${ADVERSARIAL}" = "0" ] && echo 1 || echo 0)
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 RUN_DIR="${BASE_OUTPUT_DIR}/${TIMESTAMP}"
 LOG_FILE="${RUN_DIR}/sim.log"
@@ -183,6 +184,7 @@ echo "NCCL_ASYNC_ERROR_HANDLING=${NCCL_ASYNC_ERROR_HANDLING}"
 echo "NCCL_IB_DISABLE=${NCCL_IB_DISABLE}"
 echo "NCCL_DEBUG=${NCCL_DEBUG}"
 echo "TORCH_DISTRIBUTED_DEBUG=${TORCH_DISTRIBUTED_DEBUG}"
+echo "ADVERSARIAL=${ADVERSARIAL} USE_HUMAN_LABELS=${USE_HUMAN_LABELS}"
 echo -n "FINAL_CMD="
 printf '%q ' "${FINAL_CMD[@]}"
 echo

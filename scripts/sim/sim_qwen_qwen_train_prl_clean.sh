@@ -28,8 +28,9 @@ export NUMBER_OF_SAMPLES="${NUMBER_OF_SAMPLES:-20}"
 export NUMBER_OF_PROMPTS="${NUMBER_OF_PROMPTS:-5}"
 export ADVERSARIAL="${ADVERSARIAL:-0}"
 export REASONING="${REASONING:-True}"
-
-BASE_OUTPUT_DIR="/qiuyeqing/llama_prl/PRL-REDO/PRL-addENV/output/sim"
+# USE_HUMAN_LABELS=1 means the reward signal aligns with human gold labels (ADVERSARIAL=0).
+# USE_HUMAN_LABELS=0 means adversarial mode where rewards oppose the gold labels (ADVERSARIAL=1).
+export USE_HUMAN_LABELS=$([ "${ADVERSARIAL}" = "0" ] && echo 1 || echo 0)
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 RUN_DIR="${BASE_OUTPUT_DIR}/sim-qwen-qwen-${TIMESTAMP}"
 LOG_FILE="${RUN_DIR}/sim.log"
@@ -293,6 +294,7 @@ log "TOKENIZERS_PARALLELISM=${TOKENIZERS_PARALLELISM}"
 log "PYTHONFAULTHANDLER=${PYTHONFAULTHANDLER}"
 log "HEARTBEAT_INTERVAL_SEC=${HEARTBEAT_INTERVAL_SEC}"
 log "STALL_TIMEOUT_SEC=${STALL_TIMEOUT_SEC}"
+log "ADVERSARIAL=${ADVERSARIAL} USE_HUMAN_LABELS=${USE_HUMAN_LABELS}"
 {
   printf '[%s] FINAL_CMD=' "$(date '+%F %T')"
   printf '%q ' "${FINAL_CMD[@]}"
